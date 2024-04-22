@@ -1,13 +1,13 @@
 import { Dispatch } from 'redux';
-import { NotifyMessageType } from './types';
+import { NotifyMessageType, ToastMsgType } from './types';
 
 export const NOTIFY = 'notify_NOTIFY' as const;
 export const ENQ_NOTIFY = 'notify_ENQ_NOTIFY' as const;
 export const DEQ_NOTIFY = 'notify_DEQ_NOTIFY' as const;
 
 export const notify =
-  (msg: string, disappearTime = 3000) =>
-  (dispatch: Dispatch) => {
+  (msg: string, msgType: ToastMsgType = 'info', disappearTime = 3000): any =>
+  async (dispatch: Dispatch) => {
     dispatch(reqNotify());
     try {
       dispatch(
@@ -15,7 +15,8 @@ export const notify =
           msg,
           disappearTime,
           uuid: Math.floor(Date.now() - Math.random()),
-        }),
+          msgType
+        })
       );
       setTimeout(() => dispatch(deqNotify()), disappearTime);
     } catch (e) {
@@ -23,9 +24,10 @@ export const notify =
       dispatch(
         enqNotify({
           msg: 'Something was wrong!',
+          msgType: 'error',
           disappearTime,
-          type: 'error',
-        }),
+          uuid: Math.floor(Date.now() - Math.random())
+        })
       );
     }
   };
@@ -35,9 +37,11 @@ export const reqNotify = () => ({ type: NOTIFY });
 export const enqNotify = ({
   msg,
   disappearTime,
-}: Partial<NotifyMessageType>) => ({
+  msgType,
+  uuid
+}: NotifyMessageType) => ({
   type: ENQ_NOTIFY,
-  payload: { msg, disappearTime },
+  payload: { msg, disappearTime, msgType, uuid }
 });
 
 export const deqNotify = () => ({ type: DEQ_NOTIFY });

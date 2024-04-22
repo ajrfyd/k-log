@@ -1,10 +1,12 @@
 import { enqNotify, deqNotify, reqNotify } from './actions';
 
+export type ToastMsgType = 'info' | 'error';
+
 export type NotifyMessageType = {
   msg: string;
   disappearTime?: number;
   uuid?: number;
-  type: 'info' | 'error';
+  msgType?: ToastMsgType;
 };
 
 export type NotifyActionType =

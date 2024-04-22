@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import notifyReducer from './notify/reducer';
 
 const rootReducer = combineReducers({
-  notify: notifyReducer,
+  notify: notifyReducer
 });
 
 export type RootReducerType = ReturnType<typeof rootReducer>;
