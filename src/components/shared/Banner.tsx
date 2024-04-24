@@ -1,20 +1,26 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, forwardRef, ForwardedRef } from 'react';
 import styled from 'styled-components';
-
 type BannerProps = PropsWithChildren & {
   title: string;
   $shadow?: boolean;
   subTitle?: string;
 };
 
-const Banner = ({ title, $shadow = false, subTitle }: BannerProps) => {
-  return (
-    <BannerSection>
-      <Title $shadow={$shadow}>{title}</Title>
-      {subTitle && <SubTitle>{subTitle}</SubTitle>}
-    </BannerSection>
-  );
-};
+const Banner = forwardRef(
+  (
+    { title, $shadow = false, subTitle }: BannerProps,
+    ref: ForwardedRef<HTMLHeadingElement>
+  ) => {
+    return (
+      <BannerSection>
+        <Title $shadow={$shadow} ref={ref}>
+          {title}
+        </Title>
+        {subTitle && <SubTitle>{subTitle}</SubTitle>}
+      </BannerSection>
+    );
+  }
+);
 
 export default Banner;
 
@@ -34,6 +40,9 @@ const Title = styled.h1<{ $shadow?: boolean }>`
   text-shadow: ${({ $shadow }) =>
     $shadow ? '5px 5px 3px rgba(0, 0, 0, .9)' : 'none'};
 
+  &.fade {
+    color: red;
+  }
   @media (max-width: 400px) {
     font-size: 3.5rem;
   }

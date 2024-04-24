@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Logo from './Logo';
 import MenuItem from './MenuItem';
-import Iconbutton from '@shared/IconBotton';
+import Iconbutton from '@shared/IconButton';
 import { UnplugIcon, GithubIcon } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { notify } from '@/store/notify/actions';
@@ -40,9 +40,7 @@ const NavBar = ({ logInHandler, logOutHandler, user }: NavBarProps) => {
               {/* <Nav.Link href="#action1">Posts</Nav.Link> */}
               <MenuItem
                 to="/"
-                onClick={() =>
-                  dispatch(notify('블로그 페이지 입니다.', 'info'))
-                }
+                onClick={() => dispatch(notify('블로그 페이지 입니다.'))}
               >
                 Posts
               </MenuItem>

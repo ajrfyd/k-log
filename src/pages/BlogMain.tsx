@@ -1,29 +1,25 @@
-import { useReqPostQuery } from '@/lib/api/useQueries';
 import { useState } from 'react';
+import { useReqPostQuery } from '@/lib/api/useQueries';
 import Helmet from '@shared/Helmet';
-import Banner from '@shared/Banner';
-import Categories from '@/components/categories/Categories';
+import TagCategories from '@/components/categories/TagCategories';
 import { Container, Col } from 'react-bootstrap';
 import GridItemContainer from '@shared/GridItemContainer';
 import PostCard from '@/components/Post/PostCard';
 import NoResults from '@shared/NoResults';
 import { TagType } from '@/lib/api/types';
+// import FullScreenMessage from '@shared/FullScreenMessage';
+// import Banner from '@shared/Banner';
 
 const BlogMain = () => {
-  const [tag, setTag] = useState<TagType | null>(null);
-  const [isFetching, setIsFetching] = useState(true);
+  const [tag, setTag] = useState<Partial<TagType>>({ label: 'All' });
+  const { data, isError } = useReqPostQuery(tag);
 
-  const { data, isError, isLoading } = useReqPostQuery(isFetching);
-  console.log(data);
-  console.log(isLoading);
+  const tagSearchHandler = (tag: TagType) => setTag(tag);
 
-  const tagSearchHandler = (tag: TagType) => {
-    setIsFetching(true);
-    setTag(tag);
-  };
-
-  if (!data) return null;
-  if (isLoading) return <div style={{ fontSize: '5rem' }}>Loading....</div>;
+  // if (isLoading) return <div style={{ fontSize: '5rem' }}>Loading....</div>;
+  // if (!data) return null;
+  if (isError) return null;
+  // if(!data) return null;
   return (
     <main>
       <Helmet
@@ -32,17 +28,15 @@ const BlogMain = () => {
         url="/"
         keyword="klog, blog, tech, list, posts, 포스트 목록"
       />
-      <Banner title="hk's Blog" subTitle="Welcome my page!" $shadow />
+      {/* <Banner title="hk's Blog" subTitle="Welcome my page!" $shadow /> */}
+
       {data && (
         <>
-          <Categories
-            tags={data.result.tags}
-            tagSearchHandler={tagSearchHandler}
-          />
+          <TagCategories tags={data.tags} tagSearchHandler={tagSearchHandler} />
           <Container>
             <GridItemContainer>
-              {data.result.posts.length >= 1 ? (
-                data.result.posts.map((post) => (
+              {data.posts.length >= 1 ? (
+                data.posts.map((post) => (
                   <Col key={post.id}>
                     <PostCard post={post} />
                   </Col>

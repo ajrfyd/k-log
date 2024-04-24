@@ -1,12 +1,13 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import GlobalStyles from '@styles/global';
 import Helmet from '@shared/Helmet';
-import BlogMain from './pages/BlogMain';
-import NotifySection from './components/notification/NotifySection';
-import NavBar from './components/gnb/NavBar';
-import { useEffect, useState } from 'react';
-import { UserStateType } from './lib/types/types';
-import styled from 'styled-components';
+import BlogMain from '@pages/BlogMain';
+import NotifySection from '@components/notification/NotifySection';
+import NavBar from '@components/gnb/NavBar';
+import NotFound from '@shared/NotFound';
+import Post from '@pages/Post';
+import OutletBanner from '@shared/OutletBanner';
+// import { UserStateType } from './lib/types/types';
 
 const App = () => {
   // const [user, setUser] = useState();
@@ -27,7 +28,6 @@ const App = () => {
 
   return (
     <div>
-      <GlobalStyles />
       <Helmet
         title="Welcome to hk's blog"
         desc="2년차 개발자의 개인 블로그입니다."
@@ -38,8 +38,16 @@ const App = () => {
         logOutHandler={logOutHandler}
         // user={user}
       />
+
       <Routes>
-        <Route path="/" element={<BlogMain />} />
+        {/* <Route path="/" element={<BlogMain />} /> */}
+        {/* <Route path="/post/:id" element={<Post />} /> */}
+        <Route path="/" element={<OutletBanner />}>
+          <Route index element={<BlogMain />} />
+          <Route path="/post/:id" element={<Post />} />
+        </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <NotifySection />
     </div>

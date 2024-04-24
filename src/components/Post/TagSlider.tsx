@@ -8,12 +8,12 @@ type SliderProp = {
   items?: ServerTagType[];
   $hovered: boolean;
   style?: React.CSSProperties;
-  h?: number;
+  $h?: number;
 };
 
-const TagSlider = ({ items, $hovered, style, h = 2 }: SliderProp) => {
+const TagSlider = ({ items, $hovered, style, $h = 2 }: SliderProp) => {
   return (
-    <Container style={style} h={h}>
+    <Container style={style} $h={$h}>
       <SlideContainer>
         <SlideComponent $hovered={$hovered}>
           <MarqueeComp play={$hovered} gradient gradientWidth={16}>
@@ -34,7 +34,7 @@ const TagSlider = ({ items, $hovered, style, h = 2 }: SliderProp) => {
 export default TagSlider;
 
 const Container = styled.div<Omit<SliderProp, '$hovered'>>`
-  height: ${({ h }) => h + 'rem'};
+  height: ${({ $h }) => $h + 'rem'};
   margin-bottom: 5px;
   padding: 0.5rem 1rem;
   display: flex;

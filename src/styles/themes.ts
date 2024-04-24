@@ -1,10 +1,11 @@
 const zIndex = {
+  tagSlider: 10,
   backDrop: 1000,
-  upperBackDrop: 1001,
+  upperBackDrop: 1001
 };
 
 const themes = {
-  zIndex,
+  zIndex
 };
 
 export default themes;

@@ -27,7 +27,7 @@ const PostCard = ({ post }: PostCardProps) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Link to={`/post/${post.id}`}>
+      <Link to={`/post/${post.id}`} state={{ ...post }}>
         {/* <Card.Header>Tags</Card.Header> */}
         <Card.Header>{getCreatedAt(post.createdAt.toString())}</Card.Header>
         <Card.Body>
@@ -62,6 +62,7 @@ const CardContainer = styled(Card)`
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     color: var(--purple);
+    color: #676aec;
   }
 
   &:hover {

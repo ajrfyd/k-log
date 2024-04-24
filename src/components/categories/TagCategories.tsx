@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { ArrowBigLeftDashIcon, ArrowBigRightDashIcon } from 'lucide-react';
 import ArrowButton from './ArrowButton';
@@ -117,11 +117,18 @@ const Categories = ({ tags, tagSearchHandler }: CategoriesProps) => {
 export default Categories;
 
 const Container = styled.div`
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: ${({ theme }) => theme.zIndex.tagSlider};
+
   display: flex;
   align-items: center;
   margin-top: 5px;
   padding: 0 2rem;
   margin: 0;
+  background-color: var(--beige);
+  /* background-color: transparent; */
 `;
 
 const TabContainer = styled.div`
