@@ -10,7 +10,7 @@ const basicInstance = axios.create({
 });
 
 export const getPostsData = async <T>(id?: string | null) => {
-  console.log('api request', id);
+  // console.log('api request', id);
   try {
     const { data } = await basicInstance.get<T>(
       `/klog/post${id ? `/tag/${id}` : ''}`

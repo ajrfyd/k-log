@@ -6,10 +6,11 @@ type TextProps = {
   size?: fontSizeKeys;
   color?: colorKeys;
   display?: CSSProperties['display'];
-  textAlign?: CSSProperties['textAlign'];
+  align?: CSSProperties['textAlign'];
   fontWeight?: CSSProperties['fontWeight'];
   bold?: boolean;
-  text: string;
+  text: React.ReactNode;
+  style?: CSSProperties;
 };
 
 const Text = ({
@@ -17,18 +18,20 @@ const Text = ({
   size = 'regular',
   color = 'grey',
   display,
-  textAlign,
+  align,
   fontWeight,
-  bold
+  bold,
+  style
 }: TextProps) => {
   return (
     <TextSpan
       size={size}
       color={color}
       display={display}
-      textAlign={textAlign}
+      align={align}
       fontWeight={fontWeight}
       bold={bold}
+      style={style}
     >
       {text}
     </TextSpan>
@@ -50,7 +53,7 @@ const TextSpan = styled.span<Omit<TextProps, 'text'>>`
       ${colors[color]}
     `};
   display: ${({ display }) => display};
-  text-align: ${({ textAlign }) => textAlign};
+  text-align: ${({ align }) => align};
   font-weight: ${({ fontWeight }) => fontWeight};
   ${({ bold }) =>
     bold &&

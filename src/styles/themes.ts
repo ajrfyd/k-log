@@ -10,7 +10,8 @@ const fontSize = {
   big: 2.5,
   large: 1.5,
   medium: 1.2,
-  regular: 1
+  regular: 1,
+  small: 0.8
 };
 
 const colors = {

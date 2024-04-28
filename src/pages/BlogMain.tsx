@@ -33,7 +33,7 @@ const BlogMain = () => {
       {data && (
         <>
           <TagCategories tags={data.tags} tagSearchHandler={tagSearchHandler} />
-          <Container>
+          <Container className="pb-3">
             <GridItemContainer>
               {data.posts.length >= 1 ? (
                 data.posts.map((post) => (
