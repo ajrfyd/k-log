@@ -1,10 +1,11 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useOutletContext } from 'react-router-dom';
 import Helmet from '@shared/Helmet';
 import MDEditor from '@uiw/react-md-editor';
 import FullScreenMessage from '@shared/FullScreenMessage';
 import { PostType } from '@/lib/api/types';
 import { Container } from 'react-bootstrap';
 import { useReqPostById } from '@lib/api/useQueries';
+import { MutableRefObject } from 'react';
 // import Banner from '@shared/Banner';
 // import Iconbutton from '@shared/IconButton';
 // import { Undo2Icon, FileEditIcon } from 'lucide-react';
@@ -14,7 +15,9 @@ const Post = () => {
   const state = location.state as PostType;
   const { id } = useParams();
   const { data, isError } = useReqPostById(state, id as string);
-
+  const { title } = useOutletContext<{ title: MutableRefObject<string> }>();
+  // console.log(title);
+  title.current = data.title;
   // if (isLoading) return <FullScreenMessage type="loading" />;
   if (!data) return null;
   if (isError) return <FullScreenMessage type="error" />;

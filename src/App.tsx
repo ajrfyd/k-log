@@ -8,6 +8,7 @@ import NotFound from '@shared/NotFound';
 import Post from '@pages/Post';
 import OutletBanner from '@shared/OutletBanner';
 // import { UserStateType } from './lib/types/types';
+import Text from '@shared/Text';
 
 const App = () => {
   // const [user, setUser] = useState();
@@ -50,6 +51,15 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <NotifySection />
+      <Text
+        text="Siblal!"
+        color="red"
+        size="medium"
+        textAlign="center"
+        display="block"
+        // bold
+        // fontWeight={100}
+      />
     </div>
   );
 };

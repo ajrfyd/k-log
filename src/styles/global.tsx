@@ -7,6 +7,10 @@ const GlobalStyles = createGlobalStyle`
     --teal: #9DD6DF;
     --purple: #676aec;
     --white: #f2f2f2;
+    --red: #f44336;
+    --blue: #2196f3;
+    --green: #4caf50;
+    --grey: #f0efef;
   }
 
   @font-face {

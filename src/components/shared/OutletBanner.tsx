@@ -1,23 +1,25 @@
 import { Suspense, useEffect, useRef } from 'react';
 import { useLocation, Outlet } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import Banner from './Banner';
-import { ServerDefaultResponseType, PostType } from '@/lib/api/types';
+// import { useQueryClient } from '@tanstack/react-query';
+// import { ServerDefaultResponseType, PostType } from '@/lib/api/types';
 
 const OutletBanner = () => {
   const { pathname, state } = useLocation();
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const clientQuery = useQueryClient();
-
+  const str = useRef('');
+  // const clientQuery = useQueryClient();
   useEffect(() => {
+    if (pathname === '/') return;
     if (!titleRef.current) return;
     const timeOut = setTimeout(() => {
-      const [cache] = clientQuery.getQueriesData({
-        queryKey: ['GetPostById']
-      });
-      const { result } = cache[1] as ServerDefaultResponseType<PostType>;
-      titleRef.current!.innerText = result.title;
+      titleRef.current!.innerText = str.current;
+
+      // const [cache] = clientQuery.getQueriesData({
+      //   queryKey: ['GetPostById']
+      // });
+      // const { result } = cache[1] as ServerDefaultResponseType<PostType>;
     }, 200);
 
     return () => {
@@ -34,7 +36,7 @@ const OutletBanner = () => {
         ref={titleRef}
       />
       <Suspense fallback={<Loading>Loading...</Loading>}>
-        <Outlet />
+        <Outlet context={{ title: str }} />
       </Suspense>
     </Section>
   );
