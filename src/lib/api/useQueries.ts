@@ -27,19 +27,28 @@ export const useReqPostQuery = (tag: Partial<TagType> = { label: 'All' }) => {
   return { data, isError };
 };
 
-export const useReqPostById = (state: PostType | null, id: string) => {
-  if (!state) {
-    const { data, isLoading, isError } = useSuspenseQuery({
-      queryKey: ['GetPostById'],
-      queryFn: () => getPostById<PostType>(id),
-      select: (res) => res.result
-      // staleTime: 5 * 60 * 1000
-    });
-
-    return { data, isLoading, isError };
-  }
-  return { data: { ...state }, isLoading: false, isError: false };
+export const useReqPostById = (id: string) => {
+  const { data, isError } = useSuspenseQuery({
+    queryKey: ['getPostById', id],
+    queryFn: () => getPostById<PostType>(id),
+    select: (res) => res.result
+  });
+  return { data, isError };
 };
+
+// export const useReqPostById = (state: PostType | null, id: string) => {
+//   if (!state) {
+//     const { data, isLoading, isError } = useSuspenseQuery({
+//       queryKey: ['GetPostById'],
+//       queryFn: () => getPostById<PostType>(id),
+//       select: (res) => res.result
+//       // staleTime: 5 * 60 * 1000
+//     });
+
+//     return { data, isLoading, isError };
+//   }
+//   return { data: { ...state }, isLoading: false, isError: false };
+// };
 
 // export const useReqPostByIdQuery = (id: string, hasData: boolean) => {
 //   const { data, isLoading, isError, isSuccess } = useQuery({
