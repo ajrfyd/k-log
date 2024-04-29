@@ -32,9 +32,10 @@ const themes = {
   colors
 };
 
-export type ThemesKeys = typeof themes;
 export type fontSizeKeys = keyof typeof fontSize;
 export type zIndexKeys = keyof typeof zIndex;
 export type colorKeys = keyof typeof colors;
+
+export type ThemesKeys = typeof themes;
 
 export default themes;

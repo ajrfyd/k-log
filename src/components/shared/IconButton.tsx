@@ -8,7 +8,7 @@ type PropsType = PropsWithChildren & {
 
 const Iconbutton = ({ children, onClick, style }: PropsType) => {
   return (
-    <IconBtn onClick={onClick} style={style}>
+    <IconBtn onClick={onClick} style={style} role="button" aria-label="button">
       {children}
     </IconBtn>
   );

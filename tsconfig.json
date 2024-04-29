@@ -32,7 +32,8 @@
       "@hooks/*": ["lib/hooks/*"],
       "@store/*": ["store/*"],
       "@styles/*": ["styles/*"]
-    }
+    },
+    "typeRoots": ["./**/*.d.ts"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
