@@ -1,12 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Helmet from '@shared/Helmet';
-import BlogMain from '@pages/BlogMain';
+// import BlogMain from '@pages/BlogMain';
 import NotifySection from '@components/notification/NotifySection';
 import NavBar from '@components/gnb/NavBar';
 import Post from '@pages/Post';
 import OutletBanner from '@shared/OutletBanner';
 import FullScreenMessage from '@shared/FullScreenMessage';
+
+const BlogMain = lazy(() => import('@pages/BlogMain'));
 // import NotFound from '@shared/NotFound';
 // import { UserStateType } from './lib/types/types';
 
