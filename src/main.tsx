@@ -13,7 +13,8 @@ import { ThemeProvider } from 'styled-components';
 import themes from '@styles/themes.ts';
 import GlobalStyles from '@styles/global';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import FullScreenMessage from '@shared/FullScreenMessage.tsx';
+import FullScreenMessage from '@shared/FullScreenMessage.tsx';
+import { Suspense } from 'react';
 
 declare global {
   interface Window {
@@ -41,7 +42,9 @@ const Wrappers = (
         <ThemeProvider theme={themes}>
           {/* <Suspense fallback={<FullScreenMessage type="loading" />}> */}
           <BrowserRouter>
-            <App />
+            <Suspense fallback={<FullScreenMessage type="loading" />}>
+              <App />
+            </Suspense>
           </BrowserRouter>
           {/* </Suspense> */}
         </ThemeProvider>

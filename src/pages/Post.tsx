@@ -5,6 +5,7 @@ import FullScreenMessage from '@shared/FullScreenMessage';
 import { Container } from 'react-bootstrap';
 import { useReqPostById } from '@lib/api/useQueries';
 import Banner from '@shared/Banner';
+// import { Suspense } from 'react';
 // import { PostType } from '@/lib/api/types';
 // import { MutableRefObject } from 'react';
 // import Iconbutton from '@shared/IconButton';
@@ -49,10 +50,10 @@ const Post = () => {
           />
           {/* {user && user.role === 'admin' && (
             <Iconbutton
-              style={{ position: 'absolute', top: '1rem', right: '1.5rem' }}
-              onClick={() => navigate(`/write/${post.id}`, { state: post })}
+            style={{ position: 'absolute', top: '1rem', right: '1.5rem' }}
+            onClick={() => navigate(`/write/${post.id}`, { state: post })}
             >
-              <FileEditIcon />
+            <FileEditIcon />
             </Iconbutton>
           )} */}
         </Container>

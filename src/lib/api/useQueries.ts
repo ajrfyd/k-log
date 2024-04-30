@@ -1,11 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { getPostsData, getPostById } from './api';
 import { PostListType, TagType, PostType } from './types';
 
 export const useReqPostQuery = (tag: Partial<TagType> = { label: 'All' }) => {
   // 계속 fetching 일어 난다
   // Todo staleTime or gcTime 설정 하여 필터링 하자 !
-  const { data, isError } = useQuery({
+  const { data, isError } = useSuspenseQuery({
     // queryKey: ['GetPostsData'],
     // staleTime: 1000 * 60,
     queryFn: () => getPostsData<PostListType>(tag.value ? tag.value : null),
@@ -28,7 +28,7 @@ export const useReqPostQuery = (tag: Partial<TagType> = { label: 'All' }) => {
 };
 
 export const useReqPostById = (id: string) => {
-  const { data, isError } = useQuery({
+  const { data, isError } = useSuspenseQuery({
     queryKey: ['getPostById', id],
     queryFn: () => getPostById<PostType>(id),
     select: (res) => res.result
