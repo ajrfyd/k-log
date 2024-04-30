@@ -4,9 +4,10 @@ import Helmet from '@shared/Helmet';
 import BlogMain from '@pages/BlogMain';
 import NotifySection from '@components/notification/NotifySection';
 import NavBar from '@components/gnb/NavBar';
-import NotFound from '@shared/NotFound';
 import Post from '@pages/Post';
 import OutletBanner from '@shared/OutletBanner';
+import FullScreenMessage from '@shared/FullScreenMessage';
+// import NotFound from '@shared/NotFound';
 // import { UserStateType } from './lib/types/types';
 
 const App = () => {
@@ -47,7 +48,7 @@ const App = () => {
           <Route path="/post/:id" element={<Post />} />
         </Route>
 
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<FullScreenMessage type="404" />} />
       </Routes>
       <NotifySection />
     </div>

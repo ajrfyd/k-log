@@ -10,36 +10,40 @@ export default defineConfig({
       { find: '@', replacement: path.resolve(__dirname, 'src') },
       {
         find: '@pages',
-        replacement: path.resolve(__dirname, 'src/pages'),
+        replacement: path.resolve(__dirname, 'src/pages')
       },
       {
         find: '@components',
-        replacement: path.resolve(__dirname, 'src/components'),
+        replacement: path.resolve(__dirname, 'src/components')
       },
       {
         find: '@shared',
-        replacement: path.resolve(__dirname, 'src/components/shared'),
+        replacement: path.resolve(__dirname, 'src/components/shared')
       },
       {
         find: '@lib',
-        replacement: path.resolve(__dirname, 'src/lib'),
+        replacement: path.resolve(__dirname, 'src/lib')
       },
       {
         find: '@utils',
-        replacement: path.resolve(__dirname, 'src/lib/utils'),
+        replacement: path.resolve(__dirname, 'src/lib/utils')
       },
       {
         find: '@hooks',
-        replacement: path.resolve(__dirname, 'src/lib/hooks'),
+        replacement: path.resolve(__dirname, 'src/lib/hooks')
       },
       {
         find: '@store',
-        replacement: path.resolve(__dirname, 'src/store'),
+        replacement: path.resolve(__dirname, 'src/store')
       },
       {
         find: '@styles',
-        replacement: path.resolve(__dirname, 'src/styles'),
-      },
-    ],
+        replacement: path.resolve(__dirname, 'src/styles')
+      }
+    ]
   },
+  build: {
+    outDir: './build',
+    chunkSizeWarningLimit: 1600
+  }
 });
