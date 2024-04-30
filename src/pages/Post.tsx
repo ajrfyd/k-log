@@ -4,9 +4,9 @@ import MDEditor from '@uiw/react-md-editor';
 import FullScreenMessage from '@shared/FullScreenMessage';
 import { Container } from 'react-bootstrap';
 import { useReqPostById } from '@lib/api/useQueries';
+import Banner from '@shared/Banner';
 // import { PostType } from '@/lib/api/types';
 // import { MutableRefObject } from 'react';
-// import Banner from '@shared/Banner';
 // import Iconbutton from '@shared/IconButton';
 // import { Undo2Icon, FileEditIcon } from 'lucide-react';
 
@@ -32,6 +32,7 @@ const Post = () => {
         url={`/post/${data.id}`}
         keyword={data.tags.map(({ label }) => label).join(', ')}
       />
+      <Banner title={data.title} />
       {data && (
         <Container className="position-relative">
           <MDEditor.Markdown

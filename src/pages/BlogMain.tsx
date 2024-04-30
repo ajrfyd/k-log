@@ -7,8 +7,8 @@ import GridItemContainer from '@shared/GridItemContainer';
 import PostCard from '@/components/Post/PostCard';
 import NoResults from '@shared/NoResults';
 import { TagType } from '@/lib/api/types';
+import Banner from '@shared/Banner';
 // import FullScreenMessage from '@shared/FullScreenMessage';
-// import Banner from '@shared/Banner';
 
 const BlogMain = () => {
   const [tag, setTag] = useState<Partial<TagType>>({ label: 'All' });
@@ -29,7 +29,8 @@ const BlogMain = () => {
         keyword="klog, blog, tech, list, posts, 포스트 목록"
       />
       {/* <Banner title="hk's Blog" subTitle="Welcome my page!" $shadow /> */}
-
+      <Banner title="hk's Blog" subTitle="Welcome my Blog 👍" />
+      {/* <Suspense fallback={<FullScreenMessage type="loading" />}> */}
       {data && (
         <>
           <TagCategories tags={data.tags} tagSearchHandler={tagSearchHandler} />
@@ -48,6 +49,7 @@ const BlogMain = () => {
           </Container>
         </>
       )}
+      {/* </Suspense> */}
     </main>
   );
 };

@@ -1,14 +1,14 @@
-import { useEffect, lazy } from 'react';
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Helmet from '@shared/Helmet';
-// import BlogMain from '@pages/BlogMain';
+import BlogMain from '@pages/BlogMain';
 import NotifySection from '@components/notification/NotifySection';
 import NavBar from '@components/gnb/NavBar';
 import Post from '@pages/Post';
-import OutletBanner from '@shared/OutletBanner';
+// import OutletBanner from '@shared/OutletBanner';
 import FullScreenMessage from '@shared/FullScreenMessage';
 
-const BlogMain = lazy(() => import('@pages/BlogMain'));
+// const BlogMain = lazy(() => import('@pages/BlogMain'));
 // import NotFound from '@shared/NotFound';
 // import { UserStateType } from './lib/types/types';
 
@@ -43,12 +43,12 @@ const App = () => {
       />
 
       <Routes>
-        {/* <Route path="/" element={<BlogMain />} /> */}
-        {/* <Route path="/post/:id" element={<Post />} /> */}
-        <Route path="/" element={<OutletBanner />}>
+        <Route path="/" element={<BlogMain />} />
+        <Route path="/post/:id" element={<Post />} />
+        {/* <Route path="/" element={<OutletBanner />}>
           <Route index element={<BlogMain />} />
           <Route path="/post/:id" element={<Post />} />
-        </Route>
+        </Route> */}
 
         <Route path="*" element={<FullScreenMessage type="404" />} />
       </Routes>
