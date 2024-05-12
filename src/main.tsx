@@ -12,9 +12,10 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'styled-components';
 import themes from '@styles/themes.ts';
 import GlobalStyles from '@styles/global';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import FullScreenMessage from '@shared/FullScreenMessage.tsx';
 import { Suspense } from 'react';
+import ErrorBoundary from '@shared/ErrorBoundary.tsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 declare global {
   interface Window {
@@ -40,13 +41,13 @@ const Wrappers = (
       <HelmetProvider>
         <GlobalStyles />
         <ThemeProvider theme={themes}>
-          {/* <Suspense fallback={<FullScreenMessage type="loading" />}> */}
           <BrowserRouter>
-            <Suspense fallback={<FullScreenMessage type="loading" />}>
-              <App />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<FullScreenMessage type="loading" />}>
+                <App />
+              </Suspense>
+            </ErrorBoundary>
           </BrowserRouter>
-          {/* </Suspense> */}
         </ThemeProvider>
       </HelmetProvider>
     </Provider>

@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import styled, { css } from 'styled-components';
 import { CSSProperties } from 'styled-components';
+import React from 'react';
 
 type FlexProps = PropsWithChildren & {
   align?: CSSProperties['alignItems'];
@@ -17,7 +18,7 @@ const Flex = ({ children, style, ...rest }: FlexProps) => {
   );
 };
 
-export default Flex;
+export default React.memo(Flex);
 
 const FlexBox = styled.div<FlexProps>`
   display: flex;

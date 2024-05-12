@@ -12,3 +12,12 @@ export type ResponseUserType = {
   access_token: string;
   id: string;
 };
+
+export type UserLoginType = {
+  nickName: string;
+  password: string;
+};
+
+export type UserSignupType = UserLoginType & {
+  rePassword: string;
+};

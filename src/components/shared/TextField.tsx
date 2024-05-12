@@ -11,10 +11,25 @@ type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: React.ReactNode;
   hasError?: boolean;
   helpMsg?: React.ReactNode;
+  placeholder?: string;
 };
 
 const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  ({ label, hasError, helpMsg, onFocus, onBlur }, ref) => {
+  (
+    {
+      label,
+      hasError,
+      helpMsg,
+      onFocus,
+      onBlur,
+      placeholder,
+      name,
+      onChange,
+      type,
+      value
+    },
+    ref
+  ) => {
     const [focused, setFocused] = useState(false);
     const labelColor = hasError ? 'red' : focused ? 'blue' : 'purple';
 
@@ -40,7 +55,16 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             }}
           />
         )}
-        <Input onFocus={handleFocus} onBlur={handleBlur} ref={ref} />
+        <Input
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          ref={ref}
+          placeholder={placeholder}
+          name={name}
+          value={value as string}
+          onChange={onChange}
+          type={type}
+        />
         {helpMsg && (
           <Text
             text={helpMsg}

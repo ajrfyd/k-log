@@ -1,27 +1,20 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Helmet from '@shared/Helmet';
 import MDEditor from '@uiw/react-md-editor';
-import FullScreenMessage from '@shared/FullScreenMessage';
 import { Container } from 'react-bootstrap';
 import { useReqPostById } from '@lib/api/useQueries';
 import Banner from '@shared/Banner';
-// import { Suspense } from 'react';
-// import { PostType } from '@/lib/api/types';
-// import { MutableRefObject } from 'react';
-// import Iconbutton from '@shared/IconButton';
-// import { Undo2Icon, FileEditIcon } from 'lucide-react';
+import useUser from '@/lib/hooks/useUser';
+import Iconbutton from '@shared/IconButton';
+import ModifyIcon from '@/components/iconComponents/ModifyIcon';
 
-const Post = () => {
+const PostDetail = () => {
   const { id } = useParams();
-  const { data, isError } = useReqPostById(id as string);
-  // const location = useLocation();
-  // const state = location.state as PostType;
-  // const { title } = useOutletContext<{ title: MutableRefObject<string> }>();
-  // console.log(title);
-  // title.current = data.title;
-  // if (isLoading) return <FullScreenMessage type="loading" />;
+  const { data } = useReqPostById(id as string);
+  const navigate = useNavigate();
+  const { user } = useUser();
+
   if (!data) return null;
-  if (isError) return <FullScreenMessage type="error" />;
 
   return (
     <main>
@@ -56,10 +49,24 @@ const Post = () => {
             <FileEditIcon />
             </Iconbutton>
           )} */}
+          {user && user.role === 'admin' && (
+            <Iconbutton
+              onClick={() =>
+                navigate(`/write/${data.id}`, { state: data, replace: true })
+              }
+              style={{
+                position: 'absolute',
+                right: '1.5rem',
+                top: '1rem'
+              }}
+            >
+              <ModifyIcon />
+            </Iconbutton>
+          )}
         </Container>
       )}
     </main>
   );
 };
 
-export default Post;
+export default PostDetail;

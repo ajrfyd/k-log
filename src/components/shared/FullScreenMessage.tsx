@@ -1,27 +1,40 @@
 import styled from 'styled-components';
 import BackDrop from './BackDrop';
 import Helmet from '@shared/Helmet';
+import Button from '@shared/Button';
+import { useNavigate } from 'react-router-dom';
+
 type FullScreenMessageProps = {
   type: 'loading' | 'error' | '404';
+  errorMessage?: string;
 };
 
-const FullScreenMessage = ({ type }: FullScreenMessageProps) => {
+const FullScreenMessage = ({
+  type,
+  errorMessage = 'Error!!!'
+}: FullScreenMessageProps) => {
   const title =
     type === 'loading'
       ? 'Loading...'
       : type === 'error'
         ? 'Error Page'
         : '404 Page';
+  const navigate = useNavigate();
 
   return (
     <BackDrop>
       <Helmet title={title} desc={title} url="/" />
       {type === 'loading' ? (
-        <MessageTitle>Loading....</MessageTitle>
+        <MessageTitle type={type}>Loading....</MessageTitle>
       ) : type === 'error' ? (
-        <MessageTitle>Error!</MessageTitle>
+        <MessageTitle type={type}>{errorMessage}</MessageTitle>
       ) : (
-        <MessageTitle>404 NotFound!</MessageTitle>
+        <MessageTitle type={type}>404 NotFound!</MessageTitle>
+      )}
+      {type !== 'loading' && (
+        <Button size="large" disabled onClick={() => navigate(-1)}>
+          Back
+        </Button>
       )}
     </BackDrop>
   );
@@ -29,7 +42,10 @@ const FullScreenMessage = ({ type }: FullScreenMessageProps) => {
 
 export default FullScreenMessage;
 
-const MessageTitle = styled.p`
+const MessageTitle = styled.p<FullScreenMessageProps>`
   font-size: 4rem;
   font-weight: bold;
+  color: var(--purple);
+  ${({ type, theme }) =>
+    type === 'error' ? theme.colors.red : theme.colors.purple};
 `;

@@ -45,5 +45,13 @@ export default defineConfig({
   build: {
     outDir: './build',
     chunkSizeWarningLimit: 1600
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://api.hkound.pe.kr',
+        changeOrigin: true
+      }
+    }
   }
 });

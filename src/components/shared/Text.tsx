@@ -1,5 +1,6 @@
 import { CSSProperties } from 'styled-components';
-import { colorKeys, fontSizeKeys } from '@/styles/themes';
+import { fontSizeKeys } from '@/styles/fonts';
+import { colorKeys } from '@styles/colors';
 import styled, { css } from 'styled-components';
 
 type TextProps = {
@@ -53,11 +54,18 @@ const TextSpan = styled.span<Omit<TextProps, 'text'>>`
       ${colors[color]}
     `};
   display: ${({ display }) => display};
-  text-align: ${({ align }) => align};
   font-weight: ${({ fontWeight }) => fontWeight};
   ${({ bold }) =>
     bold &&
     css`
       font-weight: bold;
+    `}
+  ${({ align }) =>
+    align &&
+    css`
+      display: inline-block;
+      /* align: ${align} !important; */
+      width: 100%;
+      margin: 0 auto !important;
     `}
 `;

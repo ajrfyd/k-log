@@ -1,3 +1,5 @@
+import { UserSignupType } from '../types/types';
+
 export type TagType = {
   value: string;
   label: string;
@@ -22,7 +24,7 @@ export type PostDataType = {
   message: string;
 };
 
-type PostListResultType = {
+export type PostListResultType = {
   posts: PostType[];
   tags: ServerTagType[];
 };
@@ -45,8 +47,47 @@ export type ServerDefaultResponseType<T> = {
   result: T;
 };
 
+export type ApiResponseDefaultType = <T>() => Promise<
+  ServerDefaultResponseType<T>
+>;
+
+export type RequestPostsFnType = (
+  id?: string
+) => Promise<ServerDefaultResponseType<PostListResultType>>;
+
 export type NewPostType = {
   title: string;
   body: string;
   tags: ServerTagType[];
 };
+
+export type UserRole = 'user' | 'admin';
+
+export type NewUserResponseType = {
+  lastContactTime: Date;
+  id: string;
+  nickName: string;
+  password: null;
+  role: UserRole;
+  token: string;
+};
+
+export type LoginUserInfoType = {
+  nickName: string;
+  password: string;
+};
+
+export type ServerResponseLoginUserInfo = {
+  token: string;
+  nickName: string;
+  role: UserRole;
+  // loginType?: LoginType;
+};
+
+export type loginUserApiType = (
+  userInfo: LoginUserInfoType
+) => Promise<ServerDefaultResponseType<ServerResponseLoginUserInfo>>;
+
+export type createUserApiType = (
+  newUser: UserSignupType
+) => Promise<ServerDefaultResponseType<NewUserResponseType>>;

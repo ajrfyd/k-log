@@ -1,11 +1,11 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { getPostsData, getPostById } from './api';
-import { PostListType, TagType, PostType } from './types';
+import { useSuspenseQuery, useQuery } from '@tanstack/react-query';
+import { getPostsData, getPostById, reqSavedTagDatas } from './api';
+import { PostListType, TagType, PostType, ServerTagType } from './types';
 
 export const useReqPostQuery = (tag: Partial<TagType> = { label: 'All' }) => {
   // 계속 fetching 일어 난다
   // Todo staleTime or gcTime 설정 하여 필터링 하자 !
-  const { data, isError } = useSuspenseQuery({
+  const { data, isError, isLoading } = useSuspenseQuery({
     // queryKey: ['GetPostsData'],
     // staleTime: 1000 * 60,
     queryFn: () => getPostsData<PostListType>(tag.value ? tag.value : null),
@@ -24,7 +24,7 @@ export const useReqPostQuery = (tag: Partial<TagType> = { label: 'All' }) => {
     select: (res) => res.result
   });
 
-  return { data, isError };
+  return { data, isError, isLoading };
 };
 
 export const useReqPostById = (id: string) => {
@@ -36,27 +36,37 @@ export const useReqPostById = (id: string) => {
   return { data, isError };
 };
 
-// export const useReqPostById = (state: PostType | null, id: string) => {
-//   if (!state) {
-//     const { data, isLoading, isError } = useSuspenseQuery({
-//       queryKey: ['GetPostById'],
-//       queryFn: () => getPostById<PostType>(id),
-//       select: (res) => res.result
-//       // staleTime: 5 * 60 * 1000
-//     });
-
-//     return { data, isLoading, isError };
-//   }
-//   return { data: { ...state }, isLoading: false, isError: false };
-// };
-
-// export const useReqPostByIdQuery = (id: string, hasData: boolean) => {
-//   const { data, isLoading, isError, isSuccess } = useQuery({
-//     queryKey: ['GetPostById'],
-//     queryFn: () => getPostById<PostType>(id),
-//     select: (res) => res.result,
-//     enabled: !hasData
+// export const useMutatePost = (
+//   post: NewPostType,
+//   successFn: (data: string) => void,
+//   errorFn: (
+//     error: AxiosError<{ status: number; message: string; result: null }>
+//   ) => void,
+//   isEdit: boolean,
+//   id: string,
+//   token: string
+// ) => {
+//   alert(id);
+//   return useMutation({
+//     mutationFn: () =>
+//       isEdit
+//         ? editPost<string>({ ...post, id }, token)
+//         : createPost<string>(post),
+//     onSuccess: (data) => successFn(data.result),
+//     onError: (
+//       error: AxiosError<{ status: number; message: string; result: null }>
+//     ) => errorFn(error)
 //   });
-
-//   return { data, isLoading, isError, isSuccess };
 // };
+
+export const useReqSavedTagDatas = () => {
+  const { data: tagList, isLoading } = useQuery({
+    queryKey: [],
+    queryFn: reqSavedTagDatas<ServerTagType[]>,
+    select: (res) => res.result
+  });
+
+  return { tagList, isLoading };
+};
+
+export const useSignup = async () => {};

@@ -18,13 +18,15 @@ export default Iconbutton;
 
 const IconBtn = styled.button`
   padding: 0.2rem 0.5rem;
-  border: 2px solid var(--brown);
-  border-radius: 2rem;
+  /* border: 2px solid var(--white); */
+  /* border-radius: 50%; */
   position: relative;
+  /* color: var(--purple); */
 
   &:hover {
-    border: 2px solid var(--purple);
-    color: #075aca;
+    svg {
+      color: var(--purple);
+    }
   }
 
   &:active {

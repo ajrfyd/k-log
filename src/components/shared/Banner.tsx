@@ -1,4 +1,4 @@
-import { PropsWithChildren, forwardRef, ForwardedRef } from 'react';
+import { PropsWithChildren, forwardRef, ForwardedRef, memo } from 'react';
 import styled from 'styled-components';
 type BannerProps = PropsWithChildren & {
   title: string;
@@ -22,7 +22,7 @@ const Banner = forwardRef(
   }
 );
 
-export default Banner;
+export default memo(Banner);
 
 const BannerSection = styled.section`
   width: 100%;
@@ -43,6 +43,7 @@ const Title = styled.h1<{ $shadow?: boolean }>`
   &.fade {
     color: red;
   }
+
   @media (max-width: 400px) {
     font-size: 3.5rem;
   }

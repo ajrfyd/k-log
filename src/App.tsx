@@ -1,32 +1,23 @@
-import { useEffect, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Helmet from '@shared/Helmet';
 import NotifySection from '@components/notification/NotifySection';
 import NavBar from '@components/gnb/NavBar';
 import FullScreenMessage from '@shared/FullScreenMessage';
+import ManagePost from '@pages/ManagePost';
+import BlogMain from '@pages/BlogMain';
+import PostDetail from '@pages/PostDetail';
+import Login from '@pages/Login';
+import Signup from '@pages/Signup';
+// const PostDetail = lazy(() => import('@/pages/PostDetail'));
+// const BlogMain = lazy(() => import('@pages/BlogMain'));
 
-const Post = lazy(() => import('@pages/Post'));
-const BlogMain = lazy(() => import('@pages/BlogMain'));
 // import BlogMain from '@pages/BlogMain';
-// import Post from '@pages/Post';
 // import { UserStateType } from './lib/types/types';
-
 const App = () => {
-  // const [user, setUser] = useState();
-  const logInHandler = () =>
-    (location.href = `https://github.com/login/oauth/authorize?client_id=${
-      import.meta.env.VITE_GH_ID
-    }`);
-
-  const logOutHandler = () => {
-    localStorage.setItem('userState', 'null');
-    // setUser(null);
-  };
-
-  useEffect(() => {
-    const localUser = localStorage.getItem('userState');
-    if (!localUser) localStorage.setItem('userState', JSON.stringify(null));
-  }, []);
+  // const logInHandler = () =>
+  //   (location.href = `https://github.com/login/oauth/authorize?client_id=${
+  //     import.meta.env.VITE_GH_ID
+  //   }`);
 
   return (
     <div>
@@ -35,21 +26,21 @@ const App = () => {
         desc="2년차 개발자의 개인 블로그입니다."
         url="/"
       />
-      <NavBar
-        logInHandler={logInHandler}
-        logOutHandler={logOutHandler}
-        // user={user}
-      />
+      <NavBar />
       <Routes>
         <Route path="/" element={<BlogMain />} />
-        <Route path="/post/:id" element={<Post />} />
+        <Route path="/post/:id" element={<PostDetail />} />
         {/* <Route path="/" element={<OutletBanner />}>
           <Route index element={<BlogMain />} />
           <Route path="/post/:id" element={<Post />} />
         </Route> */}
-
+        <Route path="/write" element={<ManagePost />} />
+        <Route path="/write/:id" element={<ManagePost />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<FullScreenMessage type="404" />} />
       </Routes>
+
       <NotifySection />
     </div>
   );

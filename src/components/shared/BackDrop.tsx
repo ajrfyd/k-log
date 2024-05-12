@@ -11,6 +11,7 @@ const Dimmed = styled.div`
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.2);
+  /* background-color: transparent; */
   /* opacity: 0.5; */
 
   display: flex;

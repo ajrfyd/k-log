@@ -11,11 +11,12 @@ const GlobalStyles = createGlobalStyle`
     --blue: #2196f3;
     --green: #4caf50;
     --grey: #f0efef;
+    --black: #000;
   }
 
   @font-face {
     font-family: "GeekbleMalang2";
-    src: url("/assets/fonts/GeekbleMalang2WOFF2.woff2")  format("woff2"),
+    src: url("/assets/fonts/GeekbleMalang2WOFF2.woff2") format("woff2"),
     url("/assets/fonts/GeekbleMalang2WOFF.woff") format("woff"),
     url("/assets/fonts/GeekbleMalang2TTF.ttf") format("truetype");
     font-display: fallback;
@@ -67,6 +68,18 @@ const GlobalStyles = createGlobalStyle`
 
   html, border-style, #root {
     height: 100%;
+  }
+
+  button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
   }
 `;
 

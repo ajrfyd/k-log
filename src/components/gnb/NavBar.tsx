@@ -4,21 +4,17 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Logo from './Logo';
-import MenuItem from './MenuItem';
 import Iconbutton from '@shared/IconButton';
-import { UnplugIcon, GithubIcon } from 'lucide-react';
-import { useDispatch } from 'react-redux';
-import { notify } from '@/store/notify/actions';
-import { UserStateType } from '@/lib/types/types';
+import EnterIcon from '@components/iconComponents/EnterIcon';
+import LeaveIcon from '@components/iconComponents/LeaveIcon';
+import { useNavigate } from 'react-router-dom';
+import BookIcon from '../iconComponents/BookIcon';
+import PenIcon from '../iconComponents/PenIcon';
+import useUser from '@/lib/hooks/useUser';
 
-type NavBarProps = {
-  logInHandler: () => void;
-  logOutHandler: () => void;
-  user?: UserStateType;
-};
-
-const NavBar = ({ logInHandler, logOutHandler, user }: NavBarProps) => {
-  const dispatch = useDispatch();
+const NavBar = () => {
+  const navigate = useNavigate();
+  const { user, logoutHandler, reqUserInfo } = useUser();
 
   return (
     <NavContainer>
@@ -38,19 +34,33 @@ const NavBar = ({ logInHandler, logOutHandler, user }: NavBarProps) => {
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
               {/* <Nav.Link href="#action1">Posts</Nav.Link> */}
-              <MenuItem
+              {/* <MenuItem
                 to="/"
                 onClick={() => dispatch(notify('블로그 페이지 입니다.'))}
               >
                 Posts
-              </MenuItem>
+              </MenuItem> */}
 
               <BtnContainer>
-                <Iconbutton>
-                  {user ? (
-                    <UnplugIcon onClick={logOutHandler} />
+                {user && user.isLogin && (
+                  <Iconbutton onClick={() => reqUserInfo(user.token, 'check')}>
+                    <PenIcon />
+                  </Iconbutton>
+                )}
+                <Iconbutton onClick={() => navigate('/')}>
+                  <BookIcon />
+                </Iconbutton>
+                <Iconbutton
+                  onClick={
+                    user.isLogin ? logoutHandler : () => navigate('/login')
+                  }
+                >
+                  {user && user.isLogin ? (
+                    <LeaveIcon />
                   ) : (
-                    <GithubIcon onClick={logInHandler} />
+                    <EnterIcon
+                    // size={24}
+                    />
                   )}
                 </Iconbutton>
               </BtnContainer>
