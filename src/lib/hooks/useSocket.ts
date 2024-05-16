@@ -4,7 +4,7 @@ import { useUserState, useChatState } from './useStore';
 import { setSocket } from '@/store/chat/action';
 import { useDispatch } from 'react-redux';
 
-const { VITE_ENV } = import.meta.env;
+const { VITE_ENV, VITE_API_URL } = import.meta.env;
 
 const useSocket = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const useSocket = () => {
 
   useEffect(() => {
     const socket = io(
-      VITE_ENV !== 'development' ? VITE_ENV : 'http://localhost:8800',
+      VITE_ENV !== 'development' ? VITE_API_URL : 'http://localhost:8800',
       {
         transports: ['websocket'],
         auth: {
