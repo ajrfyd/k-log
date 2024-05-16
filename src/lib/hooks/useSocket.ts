@@ -25,7 +25,7 @@ const useSocket = () => {
     if (!socket) return;
     if (socket) dispatch(setSocket(socket));
 
-    socket.on('connected', (socket) => {
+    socket.on('connected', (_) => {
       // console.log(socket);
     });
 
