@@ -8,16 +8,20 @@ import BlogMain from '@pages/BlogMain';
 import PostDetail from '@pages/PostDetail';
 import Login from '@pages/Login';
 import Signup from '@pages/Signup';
+import ChatView from './pages/ChatView';
+import useSocket from './lib/hooks/useSocket';
 // const PostDetail = lazy(() => import('@/pages/PostDetail'));
 // const BlogMain = lazy(() => import('@pages/BlogMain'));
 
 // import BlogMain from '@pages/BlogMain';
 // import { UserStateType } from './lib/types/types';
+
 const App = () => {
   // const logInHandler = () =>
   //   (location.href = `https://github.com/login/oauth/authorize?client_id=${
   //     import.meta.env.VITE_GH_ID
   //   }`);
+  const { socket } = useSocket();
 
   return (
     <div>
@@ -42,6 +46,18 @@ const App = () => {
       </Routes>
 
       <NotifySection />
+      {socket && <ChatView />}
+
+      {/* <Iconbutton
+        $chatBtn
+        // onClick={() => (show ? dispatch(close()) : dispatch(open()))}
+        onClick={() => {}}
+        style={{
+          display: 'none'
+        }}
+      >
+        <ChatBalloon />
+      </Iconbutton> */}
     </div>
   );
 };

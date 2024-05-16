@@ -80,4 +80,5 @@ const NavContainer = styled(Navbar)`
 
 const BtnContainer = styled.div`
   margin: 0 1rem;
+  display: flex;
 `;

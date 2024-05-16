@@ -6,6 +6,7 @@ import { useUserState } from './useStore';
 import { getUserInfo } from '../api/api';
 import { ServerDefaultResponseType } from '../api/types';
 import { useNavigate } from 'react-router-dom';
+import { initialize } from '@/store/chat/action';
 
 const useUser = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const useUser = () => {
   const logoutHandler = useCallback(() => {
     localStorage.removeItem('token');
     dispatch(userLogout());
+    dispatch(initialize());
     dispatch(notify('로그아웃 되었습니다.'));
   }, [user]);
 
@@ -28,11 +30,16 @@ const useUser = () => {
           return navigate('/write');
 
         dispatch(
-          userLogin({ nickName: result.nickName, token, role: result.role })
+          userLogin({
+            nickName: result.nickName,
+            token,
+            role: result.role,
+            id: result.id
+          })
         );
       } catch (e) {
         const { status, message } = e as ServerDefaultResponseType<null>;
-        if (status === 403) {
+        if (status === 403 || status === 401) {
           localStorage.removeItem('token');
           dispatch(notify(message, 'error'));
           dispatch(userLogout());
@@ -42,6 +49,27 @@ const useUser = () => {
     },
     []
   );
+
+  const authChecker = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        dispatch(notify('로그인이 필요한 서비스 입니다.', 'info'));
+        navigate('/login', { replace: true });
+        return;
+      }
+
+      // const { result } = await getUserInfo();
+    } catch (e) {
+      const { status, message } = e as ServerDefaultResponseType<null>;
+      if (status === 403 || status === 401) {
+        dispatch(notify('로그인이 필요한 서비스 입니다.', 'info'));
+        navigate('/login', { replace: true });
+        return;
+      }
+      console.log(message, 'authCheckeer');
+    }
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -62,7 +90,7 @@ const useUser = () => {
     // console.log('%cuseUserHooks', 'color: red');
   }, [user]);
 
-  return { user, logoutHandler, reqUserInfo };
+  return { user, logoutHandler, reqUserInfo, authChecker };
 };
 
 export default useUser;

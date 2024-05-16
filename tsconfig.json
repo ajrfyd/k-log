@@ -35,6 +35,6 @@
     },
     "typeRoots": ["./**/*.d.ts"]
   },
-  "include": ["src"],
+  "include": ["src", "src/store/chat/action/.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

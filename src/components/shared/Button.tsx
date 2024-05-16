@@ -10,7 +10,7 @@ import {
 type ButtonProps = PropsWithChildren & {
   color?: buttonColorKeys;
   size?: buttonSizeKeys;
-  weak?: boolean;
+  $weak?: boolean;
   $full?: boolean;
   disabled?: boolean;
   onClick?: () => void;
@@ -21,7 +21,7 @@ type ButtonProps = PropsWithChildren & {
 const Button = ({
   color = 'primary',
   size = 'small',
-  weak,
+  $weak,
   $full,
   disabled,
   children,
@@ -33,7 +33,7 @@ const Button = ({
     <ButtonContainer
       color={color}
       size={size}
-      weak={weak}
+      $weak={$weak}
       $full={$full}
       type={type}
       aria-disabled={disabled}
@@ -48,7 +48,7 @@ const Button = ({
     <ButtonContainer
       color={color}
       size={size}
-      weak={weak}
+      $weak={$weak}
       $full={$full}
       type="button"
       aria-disabled={disabled}
@@ -67,8 +67,8 @@ const ButtonContainer = styled.button<ButtonProps>`
   border-radius: 6px !important;
   ${({ size, theme }) => size && theme.buttonSize[size]};
   /* ${({ color, theme }) => color && theme.buttonColor[color]}; */
-  ${({ weak, color }) =>
-    weak
+  ${({ $weak, color }) =>
+    $weak
       ? buttonWeakMap[color as buttonColorKeys]
       : buttonColorMap[color as buttonColorKeys]}
 

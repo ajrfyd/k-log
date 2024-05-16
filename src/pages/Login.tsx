@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '@/store/user/action';
 import { notify } from '@/store/notify/actions';
+import { useUserState } from '@/lib/hooks/useStore';
 
 const Login = () => {
   const [success, setSuccess] = useState(false);
+  const user = useUserState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -16,12 +18,22 @@ const Login = () => {
     navigate('/', { replace: true });
   }, [success]);
 
+  useEffect(() => {
+    if (!user.isLogin) return;
+    navigate('/', { replace: true });
+  }, [user]);
+
   const loginSuccessHandler = (data: ServerResponseLoginUserInfo) => {
     const savedToken = localStorage.getItem('token');
     if (savedToken) localStorage.clear();
     localStorage.setItem('token', JSON.stringify(data.token));
     dispatch(
-      userLogin({ token: data.token, nickName: data.nickName, role: data.role })
+      userLogin({
+        token: data.token,
+        nickName: data.nickName,
+        role: data.role,
+        id: data.id
+      })
     );
     dispatch(notify(`${data.nickName}님 환영합니다.`));
     setSuccess(true);

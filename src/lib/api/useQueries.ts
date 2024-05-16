@@ -1,5 +1,12 @@
 import { useSuspenseQuery, useQuery } from '@tanstack/react-query';
-import { getPostsData, getPostById, reqSavedTagDatas } from './api';
+import {
+  getPostsData,
+  getPostById,
+  reqSavedTagDatas,
+  getMessages,
+  getRooms,
+  getMessagesByRoomId
+} from './api';
 import { PostListType, TagType, PostType, ServerTagType } from './types';
 
 export const useReqPostQuery = (tag: Partial<TagType> = { label: 'All' }) => {
@@ -69,4 +76,34 @@ export const useReqSavedTagDatas = () => {
   return { tagList, isLoading };
 };
 
-export const useSignup = async () => {};
+export const useMessages = (isLogin: boolean) => {
+  const { isLoading, data, isSuccess } = useQuery({
+    queryKey: ['getMessages'],
+    queryFn: getMessages,
+    select: (res) => res.result,
+    enabled: isLogin
+  });
+
+  return { data, isLoading, isSuccess };
+};
+
+export const useGetRooms = () => {
+  const { data, isError } = useQuery({
+    queryKey: ['getRooms'],
+    queryFn: getRooms,
+    select: (res) => res.result
+  });
+
+  return { data, isError };
+};
+
+export const useGetMessagesByRoomId = (id: string, clicked: boolean) => {
+  const { data, isError } = useQuery({
+    queryKey: ['getMessagesFromRoomId', id],
+    queryFn: () => getMessagesByRoomId(id),
+    select: (res) => res.result,
+    enabled: clicked
+  });
+
+  return { data, isError };
+};

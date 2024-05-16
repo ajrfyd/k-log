@@ -1,14 +1,21 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import React, { PropsWithChildren } from 'react';
 
 type PropsType = PropsWithChildren & {
   onClick?: () => void;
   style?: React.CSSProperties;
+  $chatBtn?: boolean;
 };
 
-const Iconbutton = ({ children, onClick, style }: PropsType) => {
+const Iconbutton = ({ children, onClick, style, $chatBtn }: PropsType) => {
   return (
-    <IconBtn onClick={onClick} style={style} role="button" aria-label="button">
+    <IconBtn
+      onClick={onClick}
+      style={style}
+      role="button"
+      aria-label="button"
+      $chatBtn={$chatBtn}
+    >
       {children}
     </IconBtn>
   );
@@ -16,14 +23,39 @@ const Iconbutton = ({ children, onClick, style }: PropsType) => {
 
 export default Iconbutton;
 
-const IconBtn = styled.button`
-  padding: 0.2rem 0.5rem;
-  /* border: 2px solid var(--white); */
-  /* border-radius: 50%; */
-  position: relative;
-  /* color: var(--purple); */
+const ChatBtnStyles = css`
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  /* left: 1rem; */
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid var(--black); */
+  z-index: ${({ theme }) => theme.zIndex.chatBtn};
 
   &:hover {
+    background-color: var(--teal);
+    border-color: var(--teal);
+    svg {
+      fill: var(--purple);
+    }
+  }
+`;
+
+const IconBtn = styled.button<Pick<PropsType, '$chatBtn'>>`
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+
+  &:hover {
+    background-color: var(--teal);
     svg {
       color: var(--purple);
     }
@@ -47,4 +79,10 @@ const IconBtn = styled.button`
       margin-top: 0.5rem;
     }
   }
+
+  ${({ $chatBtn }) =>
+    $chatBtn &&
+    css`
+      ${ChatBtnStyles};
+    `}
 `;

@@ -4,7 +4,7 @@ import { useNotifyMessages } from '@/lib/hooks/useStore';
 import Toast from './Toast';
 
 const NotifySection = () => {
-  const rootPortal = document.getElementById('root-portal');
+  const rootPortal = document.getElementById('alert-portal');
   if (!rootPortal) return null;
 
   const msgs = useNotifyMessages();

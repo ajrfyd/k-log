@@ -5,8 +5,10 @@ import {
   type PostType,
   type createUserApiType,
   type loginUserApiType,
-  type UserRole
+  type UserRole,
+  type Msg
 } from './types';
+import { Room } from '@/store/chat/types';
 const { VITE_API_URL, VITE_ENV } = import.meta.env;
 
 const basicInstance = axios.create({
@@ -138,11 +140,55 @@ export const loginUser: loginUserApiType = async (userInfo: {
 };
 
 export const getUserInfo = async (): Promise<
-  ServerDefaultResponseType<{ nickName: string; role: UserRole }>
+  ServerDefaultResponseType<{ nickName: string; role: UserRole; id: string }>
 > => {
   const result = await basicInstance.get('/user', {
     withCredentials: true
   });
 
+  return result.data;
+};
+
+export const getMessages = async (): Promise<
+  ServerDefaultResponseType<Msg[]>
+> => {
+  const result = await basicInstance.get('/msg', {
+    withCredentials: true
+  });
+
+  return result.data;
+};
+
+export const sendMsg = async (
+  msg: string,
+  roomId?: string
+): Promise<ServerDefaultResponseType<Msg>> => {
+  console.log(roomId, ' < , <<');
+  const result = await basicInstance.post(
+    `/msg${roomId ? `/room/${roomId}` : ''}`,
+    { msg },
+    {
+      withCredentials: true
+    }
+  );
+  return result.data;
+};
+
+export const getRooms = async (): Promise<
+  ServerDefaultResponseType<Room[]>
+> => {
+  const result = await basicInstance.get('/msg/room', {
+    withCredentials: true
+  });
+
+  return result.data;
+};
+
+export const getMessagesByRoomId = async (
+  roomId: string
+): Promise<ServerDefaultResponseType<Msg[]>> => {
+  const result = await basicInstance.get(`/msg/${roomId}`, {
+    withCredentials: true
+  });
   return result.data;
 };

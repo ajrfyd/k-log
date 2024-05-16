@@ -16,7 +16,7 @@ const Seo = ({
   url,
   site_name = 'klog',
   imgUrl,
-  keyword = '',
+  keyword = ''
 }: SeoProps) => {
   const rootUrl = import.meta.env.VITE_SEO_URL;
 
@@ -28,7 +28,7 @@ const Seo = ({
         name="keyword"
         content={`klog, blog, hkound${keyword ? ', ' + keyword : ''}`}
       />
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content="article" />
       <meta property="og:site_name" content={site_name} />
       <meta property="og:title" content={title} />
       <meta

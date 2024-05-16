@@ -7,6 +7,7 @@ export type InitialStateType = {
   isLogin: boolean;
   loginType: LoginType;
   role: UserRole;
+  id: string;
 };
 
 export type LoginType = 'k' | 'g' | 'n' | 'i';

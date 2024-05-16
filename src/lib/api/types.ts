@@ -81,6 +81,7 @@ export type ServerResponseLoginUserInfo = {
   token: string;
   nickName: string;
   role: UserRole;
+  id: string;
   // loginType?: LoginType;
 };
 
@@ -91,3 +92,19 @@ export type loginUserApiType = (
 export type createUserApiType = (
   newUser: UserSignupType
 ) => Promise<ServerDefaultResponseType<NewUserResponseType>>;
+
+export type Char1 = 'A' | 'B';
+
+export type Msg = {
+  msgId: number;
+  msgType: Char1;
+  msg: string;
+  contactIp: string;
+  msgState: Char1;
+  createUserId: string;
+  roomId: string;
+  updatedAt: Date;
+  createdAt: Date;
+  deletedAt: Date;
+  deleteUserId: string;
+};
