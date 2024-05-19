@@ -5,10 +5,10 @@ import {
   NewPostType,
   NewUserResponseType,
   ServerDefaultResponseType,
-  LoginUserInfoType,
-  ServerResponseLoginUserInfo
+  LoginUserInfoType
 } from './types';
 import { type UserSignupType } from '../types/types';
+import { type ResponseUserType } from '@/store/user/types';
 
 // export const createOrUpdatePostMutation = (
 //   post: NewPostType,
@@ -60,9 +60,7 @@ export const signupMutation = (
 
 export const loginMutation = (
   userInfo: LoginUserInfoType,
-  onSuccessFn: (
-    res: ServerDefaultResponseType<ServerResponseLoginUserInfo>
-  ) => void,
+  onSuccessFn: (res: ServerDefaultResponseType<ResponseUserType>) => void,
   onErrorFn: (err: ServerDefaultResponseType<null>) => void
 ) => {
   return useMutation({

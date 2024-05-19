@@ -8,9 +8,17 @@ export type InitialStateType = {
   loginType: LoginType;
   role: UserRole;
   id: string;
+  roomId: string;
 };
 
 export type LoginType = 'k' | 'g' | 'n' | 'i';
+export type ResponseUserType = {
+  token: string;
+  nickName: string;
+  role: UserRole;
+  id: string;
+  roomId: string;
+};
 
 export type ActionType =
   | ReturnType<typeof userLogin>

@@ -6,7 +6,8 @@ const initialState: InitialStateType = {
   isLogin: false,
   loginType: 'i',
   role: 'user',
-  id: ''
+  id: '',
+  roomId: ''
 };
 
 const userReducer = (state = initialState, action: ActionType) => {

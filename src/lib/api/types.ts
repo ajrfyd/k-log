@@ -82,6 +82,7 @@ export type ServerResponseLoginUserInfo = {
   nickName: string;
   role: UserRole;
   id: string;
+  roomId: string;
   // loginType?: LoginType;
 };
 

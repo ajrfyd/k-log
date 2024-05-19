@@ -10,7 +10,8 @@ const initialState: InitialState = {
     new: [],
     selectedRoom: null
   },
-  socket: null
+  socket: null,
+  onlineUser: {}
 };
 
 const chatReducer = (
@@ -97,6 +98,20 @@ const chatReducer = (
         chatRooms: {
           ...state.chatRooms,
           selectedRoom: action.payload
+        }
+      };
+    case 'chat_ONLINE_USRE':
+      return {
+        ...state,
+        onlineUser: {
+          ...action.payload
+        }
+      };
+    case 'chat_LEAVE_USER':
+      return {
+        ...state,
+        onlineUser: {
+          ...action.payload
         }
       };
     default:

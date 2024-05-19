@@ -9,10 +9,10 @@ import { validate } from '@lib/utils/validator';
 import { useDispatch } from 'react-redux';
 import { notify } from '@/store/notify/actions';
 import { loginMutation } from '@/lib/api/useMutation';
-import { ServerResponseLoginUserInfo } from '@lib/api/types';
+import { type ResponseUserType } from '@/store/user/types';
 
 type LoginProps = {
-  loginSuccessHandler: (data: ServerResponseLoginUserInfo) => void;
+  loginSuccessHandler: (data: ResponseUserType) => void;
 };
 
 const LoginForm = ({ loginSuccessHandler }: LoginProps) => {
@@ -88,7 +88,7 @@ const LoginForm = ({ loginSuccessHandler }: LoginProps) => {
       <Spacing size={12} />
       <Link to="/signup">
         <Text
-          align="center"
+          $align="center"
           text="아직 계정이 없으신가요?"
           color="blue"
           size="small"

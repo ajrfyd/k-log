@@ -1,10 +1,15 @@
+import { useEffect } from 'react';
 import Flex from '../shared/Flex';
 import styled from 'styled-components';
 import InsertArea from './InsertArea';
 import Message from './Message';
 import Text from '../shared/Text';
-import { useChatState } from '../../lib/hooks/useStore';
+import { useUserState } from '../../lib/hooks/useStore';
+import useChat from '@/lib/hooks/useChat';
 // import useUser from '@/lib/hooks/useUser';
+// import { useDispatch } from 'react-redux';
+// import { setMessages } from '@/store/chat/action';
+// import useSocket from '@/lib/hooks/useSocket';
 // import { useDispatch } from 'react-redux';
 // import { close } from '@/store/chat/action';
 // import { useNavigate } from 'react-router-dom';
@@ -15,13 +20,23 @@ type ChatBodyProps = {
 };
 
 const ChatBody = ({ roomId }: ChatBodyProps) => {
-  const { msgs } = useChatState();
-  // console.log('%cChatBody component', 'color: blue');
+  const { msgs, socket, isAdmin } = useChat();
+  const user = useUserState();
+  // const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (!socket || !roomId || isAdmin) return;
+    // if (!isAdmin) return;
+    socket.emit('readMsgs', { createUserId: user.id, roomId });
+  }, [socket, user, roomId]);
+
+  // console.log('Chat Body');
   return (
     <OvFlex>
       <Container>
-        {!msgs.length && <Text text="아직 메시지가 없습니다." />}
+        {!msgs.length && (
+          <Text text="아직 메시지가 없습니다." color="purple" size="large" />
+        )}
         {msgs &&
           msgs.map((msg) => (
             <Message key={`${msg.msgId}-${msg.createdAt}`} {...msg} />

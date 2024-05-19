@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import LoginForm from '@components/user/LoginForm';
-import { type ServerResponseLoginUserInfo } from '@/lib/api/types';
+import { type ResponseUserType } from '@store/user/types';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '@/store/user/action';
@@ -23,16 +23,18 @@ const Login = () => {
     navigate('/', { replace: true });
   }, [user]);
 
-  const loginSuccessHandler = (data: ServerResponseLoginUserInfo) => {
+  const loginSuccessHandler = (data: ResponseUserType) => {
     const savedToken = localStorage.getItem('token');
     if (savedToken) localStorage.clear();
     localStorage.setItem('token', JSON.stringify(data.token));
+
     dispatch(
       userLogin({
         token: data.token,
         nickName: data.nickName,
         role: data.role,
-        id: data.id
+        id: data.id,
+        roomId: data.roomId
       })
     );
     dispatch(notify(`${data.nickName}님 환영합니다.`));

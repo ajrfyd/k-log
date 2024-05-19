@@ -21,7 +21,7 @@ const App = () => {
   //   (location.href = `https://github.com/login/oauth/authorize?client_id=${
   //     import.meta.env.VITE_GH_ID
   //   }`);
-  const { socket } = useSocket();
+  useSocket();
 
   return (
     <div>
@@ -46,7 +46,8 @@ const App = () => {
       </Routes>
 
       <NotifySection />
-      {socket && <ChatView />}
+      {/* {socket && <ChatView />} */}
+      <ChatView />
 
       {/* <Iconbutton
         $chatBtn

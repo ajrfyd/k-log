@@ -26,8 +26,8 @@ export default Iconbutton;
 const ChatBtnStyles = css`
   position: fixed;
   bottom: 1rem;
-  right: 1rem;
-  /* left: 1rem; */
+  /* right: 1rem; */
+  left: 1rem;
   width: 48px;
   height: 48px;
   display: flex;

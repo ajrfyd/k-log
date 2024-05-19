@@ -34,7 +34,8 @@ const useUser = () => {
             nickName: result.nickName,
             token,
             role: result.role,
-            id: result.id
+            id: result.id,
+            roomId: result.roomId
           })
         );
       } catch (e) {

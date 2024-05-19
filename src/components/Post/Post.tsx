@@ -31,6 +31,7 @@ type PostType = {
   localTags: ServerTagType[];
 };
 
+// Todo input select 수정
 const Post = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const Post = () => {
     body: '',
     localTags: []
   });
+
   const { tagList } = useReqSavedTagDatas();
   const { mutate } = useMutatePost(
     {
@@ -113,6 +115,7 @@ const Post = () => {
                 };
               }
             }}
+            closeMenuOnSelect={false}
             isMulti
             options={
               tagList

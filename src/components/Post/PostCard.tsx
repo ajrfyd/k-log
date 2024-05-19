@@ -20,7 +20,6 @@ const PostCard = ({ post }: PostCardProps) => {
     []
   );
   // (date: string) => new Intl.DateTimeFormat("ko", { dateStyle: "medium" }).format(new Date(date))
-
   return (
     <CardContainer
       // onClick={() => navigate(`/post/${post.id}`)}

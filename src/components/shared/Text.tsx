@@ -7,11 +7,12 @@ type TextProps = {
   size?: fontSizeKeys;
   color?: colorKeys;
   display?: CSSProperties['display'];
-  align?: CSSProperties['textAlign'];
+  $align?: CSSProperties['textAlign'];
   fontWeight?: CSSProperties['fontWeight'];
   bold?: boolean;
   text: React.ReactNode;
   style?: CSSProperties;
+  onClick?: () => void;
 };
 
 const Text = ({
@@ -19,20 +20,22 @@ const Text = ({
   size = 'regular',
   color = 'grey',
   display,
-  align,
+  $align,
   fontWeight,
   bold,
-  style
+  style,
+  onClick
 }: TextProps) => {
   return (
     <TextSpan
       size={size}
       color={color}
       display={display}
-      align={align}
+      $align={$align}
       fontWeight={fontWeight}
       bold={bold}
       style={style}
+      onClick={onClick}
     >
       {text}
     </TextSpan>
@@ -60,11 +63,11 @@ const TextSpan = styled.span<Omit<TextProps, 'text'>>`
     css`
       font-weight: bold;
     `}
-  ${({ align }) =>
-    align &&
+  ${({ $align }) =>
+    $align &&
     css`
       display: inline-block;
-      /* align: ${align} !important; */
+      /* align: ${$align} !important; */
       width: 100%;
       margin: 0 auto !important;
     `}

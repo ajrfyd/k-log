@@ -11,7 +11,9 @@ import {
   setRooms,
   setNewMsg,
   checkNewMsg,
-  selectRoom
+  selectRoom,
+  setOnlineUser,
+  setLeaveUser
 } from './action';
 
 // type MsgType = 'normal' | 'secret' | 'info';
@@ -39,6 +41,7 @@ export type InitialState = {
   isAdmin: boolean;
   chatRooms: RoomList;
   socket: Socket<any, any> | null;
+  onlineUser: Record<string, string>;
 };
 
 type RoomList = {
@@ -70,4 +73,6 @@ export type ActionType =
   | ReturnType<typeof setRooms>
   | ReturnType<typeof setNewMsg>
   | ReturnType<typeof checkNewMsg>
-  | ReturnType<typeof selectRoom>;
+  | ReturnType<typeof selectRoom>
+  | ReturnType<typeof setOnlineUser>
+  | ReturnType<typeof setLeaveUser>;

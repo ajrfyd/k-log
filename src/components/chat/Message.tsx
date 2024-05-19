@@ -20,7 +20,7 @@ const Message = ({ msg, createUserId, createdAt, msgState }: MsgProps) => {
     if (!msgRef.current) return;
     const { scrollHeight } = msgRef.current;
     msgRef.current.style.height = `${scrollHeight}px`;
-    msgRef.current.scrollIntoView({ behavior: 'smooth' });
+    msgRef.current.scrollIntoView();
   }, []);
 
   return (
@@ -31,7 +31,7 @@ const Message = ({ msg, createUserId, createdAt, msgState }: MsgProps) => {
 
       <MsgBox value={msg} readOnly ref={msgRef} $me={me} />
 
-      <Ovflex justify="flex-end" $me={me}>
+      <Ovflex $me={me}>
         <Text text={date} color="brown" />
         <Text
           text={msgState === 'A' ? '읽음' : '안읽음'}

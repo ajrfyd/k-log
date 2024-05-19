@@ -15,7 +15,6 @@ const PostDetail = () => {
   const { user } = useUser();
 
   if (!data) return null;
-
   return (
     <main>
       <Helmet

@@ -3,27 +3,18 @@ import ChatOutter from '@/components/chat/ChatOutter';
 import styled, { css } from 'styled-components';
 import Iconbutton from '@components/shared/IconButton';
 import ChatBalloon from '@components/iconComponents/ChatBalloon';
-import { useChatState } from '@/lib/hooks/useStore';
 import { useDispatch } from 'react-redux';
-import { open, close } from '@store/chat/action';
 import useUser from '@/lib/hooks/useUser';
 import { useMessages } from '@/lib/api/useQueries';
-import { useNavigate } from 'react-router-dom';
-import { notify } from '@/store/notify/actions';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { setMessages } from '@store/chat/action';
+import useChat from '@/lib/hooks/useChat';
 
 const ChatView = () => {
-  const { show, currentPage, socket } = useChatState();
+  const { open, close, show, currentPage } = useChat();
   const { user } = useUser();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { data } = useMessages(user.isLogin);
-
-  const needToLoginHandler = useCallback(() => {
-    dispatch(notify('회원 정보가 필요한 페이지 입니다.', 'info'));
-    navigate('/login', { replace: true });
-  }, [dispatch]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!data || !user.isLogin) return;
@@ -32,24 +23,14 @@ const ChatView = () => {
 
   const $container = document.getElementById('chat-portal');
   if (!$container) return null;
-  if (!socket) return null;
+  // if (!socket) return null;
 
   return createPortal(
     <>
       <Container $show={show}>
         <ChatOutter currentPage={currentPage} />
       </Container>
-      <Iconbutton
-        $chatBtn
-        // onClick={() => (show ? dispatch(close()) : dispatch(open()))}
-        onClick={() =>
-          user.nickName === '' && user.token === ''
-            ? needToLoginHandler()
-            : show
-              ? dispatch(close())
-              : dispatch(open())
-        }
-      >
+      <Iconbutton $chatBtn onClick={() => (show ? close() : open())}>
         <ChatBalloon />
       </Iconbutton>
     </>,

@@ -9,7 +9,7 @@ import Text from '../shared/Text';
 
 const SelectRoom = () => {
   const [roomId, setRoomId] = useState('');
-  const { data, isError } = useGetRooms();
+  const { data: rooms, isError } = useGetRooms();
   const { data: msgs } = useGetMessagesByRoomId(roomId, !!roomId);
   const dispatch = useDispatch();
 
@@ -17,20 +17,27 @@ const SelectRoom = () => {
     if (!roomId) return;
     if (!msgs) return;
     dispatch(setMessages(msgs));
-    // console.log(dm);
   }, [roomId, msgs, dispatch]);
 
   if (isError) return <div>Opps..</div>;
-  if (!data) return;
+  if (!rooms) return;
 
+  // console.log('select Rooom');
   return (
     <OvFlex>
-      {roomId === '' &&
-        data.map((room) => (
-          <div key={room.roomId} onClick={() => setRoomId(room.roomId)}>
-            <Text text={room.roomId} color="black" />
-          </div>
-        ))}
+      {roomId === '' && (
+        <ListRoomSection>
+          {rooms.map((room) => (
+            <ListItem onClick={() => setRoomId(room.roomId)} key={room.roomId}>
+              <Text
+                text={room.nickName}
+                color="black"
+                onClick={() => setRoomId(room.roomId)}
+              />
+            </ListItem>
+          ))}
+        </ListRoomSection>
+      )}
       {roomId && <ChatBody roomId={roomId} />}
     </OvFlex>
   );
@@ -45,4 +52,24 @@ const OvFlex = styled(Flex)`
   display: flex;
   padding-bottom: 2px;
   /* align-items: center; */
+`;
+
+const ListRoomSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 0;
+  overflow-y: scroll;
+
+  &:hover {
+    color: var(--purple);
+  }
+`;
+
+const ListItem = styled.div`
+  cursor: pointer;
+  border: 1px solid red;
+  padding: 1rem 0;
+  width: 100%;
 `;

@@ -13,6 +13,8 @@ export const CHAT_SET_ROOMS = 'chat_SET_ROOMS' as const;
 export const CHAT_NEW_MSG = 'chat_SET_NEW_MSG' as const;
 export const CHAT_CHECK_MSG = 'chat_CHECK_MSG' as const;
 export const CHAT_SELECT_ROOM = 'chat_SELCECT_ROOM' as const;
+export const CHAT_ONLINE_USER = 'chat_ONLINE_USRE' as const;
+export const CHAT_LEAVE_USER = 'chat_LEAVE_USER' as const;
 
 export const open = () => ({ type: CHAT_SHOW });
 export const close = () => ({ type: CHAT_CLOSE });
@@ -44,3 +46,12 @@ export const setSocket = (socket: Socket) => ({
 export const setMessages = (msgs: Msg[]) => ({ type: SET_MSGS, payload: msgs });
 
 export const pushMsg = (msg: Msg) => ({ type: PUSH_MSG, payload: msg });
+
+export const setOnlineUser = (user: Record<string, string>) => ({
+  type: CHAT_ONLINE_USER,
+  payload: user
+});
+export const setLeaveUser = (user: Record<string, string>) => ({
+  type: CHAT_LEAVE_USER,
+  payload: user
+});

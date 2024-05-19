@@ -20,9 +20,9 @@ const basicInstance = axios.create({
 });
 
 basicInstance.interceptors.response.use(
-  (res) => (console.log(), res),
+  (res) => res,
   (e) => {
-    console.log('%cInterceptor', 'color: red');
+    // console.log('%cInterceptor', 'color: red');
     if (e instanceof AxiosError) {
       // console.log('AxiosError', e);
       // const Err = new Error(e.message);
@@ -43,8 +43,8 @@ export const getPostsData = async <T>(id?: string | null) => {
   // console.log('api request', id);
   // try {
   const { data } = await basicInstance.get<T>(
-    `/klog/post${id ? `/tag/${id}` : ''}`
-    // `/blog/${id ? 'tag' : 'posts'}${id ? `/${id}` : ''}`
+    // `/klog/post${id ? `/tag/${id}` : ''}`
+    `/blog/${id ? 'tag' : 'posts'}${id ? `/${id}` : ''}`
   );
 
   // console.log(data, 'PostsDatas');
@@ -66,7 +66,7 @@ export const getPostsData = async <T>(id?: string | null) => {
 export const getPostById = async <T>(id: string) => {
   try {
     const { data } = await basicInstance.get<ServerDefaultResponseType<T>>(
-      `/klog/post/${id}`,
+      `/blog/post/${id}`,
       { withCredentials: true }
     );
     return data;
@@ -100,8 +100,8 @@ export const createPost = async <T>(post: NewPostType) => {
 export const editPost = async <T>(post: Omit<PostType, 'createdAt'>) => {
   try {
     const { data } = await basicInstance.post<ServerDefaultResponseType<T>>(
-      '/klog/post/edit',
-      // `/blog/post/${post.id}`,
+      // '/klog/post/edit',
+      `/blog/post/${post.id}`,
       post
     );
     return data;
@@ -115,7 +115,7 @@ export const editPost = async <T>(post: Omit<PostType, 'createdAt'>) => {
 export const reqSavedTagDatas = async <T>() => {
   try {
     const { data } =
-      await basicInstance.get<ServerDefaultResponseType<T>>('/klog/tags');
+      await basicInstance.get<ServerDefaultResponseType<T>>('/blog/tags');
 
     return data;
   } catch (e) {
@@ -140,7 +140,12 @@ export const loginUser: loginUserApiType = async (userInfo: {
 };
 
 export const getUserInfo = async (): Promise<
-  ServerDefaultResponseType<{ nickName: string; role: UserRole; id: string }>
+  ServerDefaultResponseType<{
+    nickName: string;
+    role: UserRole;
+    id: string;
+    roomId: string;
+  }>
 > => {
   const result = await basicInstance.get('/user', {
     withCredentials: true
@@ -163,7 +168,6 @@ export const sendMsg = async (
   msg: string,
   roomId?: string
 ): Promise<ServerDefaultResponseType<Msg>> => {
-  console.log(roomId, ' < , <<');
   const result = await basicInstance.post(
     `/msg${roomId ? `/room/${roomId}` : ''}`,
     { msg },
@@ -175,7 +179,7 @@ export const sendMsg = async (
 };
 
 export const getRooms = async (): Promise<
-  ServerDefaultResponseType<Room[]>
+  ServerDefaultResponseType<({ nickName: string } & Room)[]>
 > => {
   const result = await basicInstance.get('/msg/room', {
     withCredentials: true
