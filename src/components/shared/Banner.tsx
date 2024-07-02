@@ -26,7 +26,7 @@ export default memo(Banner);
 
 const BannerSection = styled.section`
   width: 100%;
-  height: 300px;
+  height: 250px;
   background-color: var(--teal);
   display: flex;
   justify-content: center;
