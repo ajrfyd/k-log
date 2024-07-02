@@ -3,46 +3,51 @@ import BackDrop from './BackDrop';
 import Helmet from '@shared/Helmet';
 import Button from '@shared/Button';
 import { useNavigate } from 'react-router-dom';
+// import Loading from './Loading';
+// import { FallbackProps } from 'react-error-boundary';
+
+type FullScreenType = 'info' | 'error' | 'loading';
 
 type FullScreenMessageProps = {
-  type: 'loading' | 'error' | '404';
-  errorMessage?: string;
+  type?: FullScreenType;
+  title?: string;
 };
 
 const FullScreenMessage = ({
-  type,
-  errorMessage = 'Error!!!'
+  type = 'error',
+  title
 }: FullScreenMessageProps) => {
-  const title =
-    type === 'loading'
-      ? 'Loading...'
-      : type === 'error'
-        ? 'Error Page'
-        : '404 Page';
+  // const title = type === 'error' ? 'Error Page' : '404 Page';
   const navigate = useNavigate();
 
   return (
     <BackDrop>
-      <Helmet title={title} desc={title} url="/" />
-      {type === 'loading' ? (
-        <MessageTitle type={type}>Loading....</MessageTitle>
-      ) : type === 'error' ? (
-        <MessageTitle type={type}>{errorMessage}</MessageTitle>
-      ) : (
-        <MessageTitle type={type}>404 NotFound!</MessageTitle>
-      )}
-      {type !== 'loading' && (
-        <Button size="large" disabled onClick={() => navigate(-1)}>
+      <Helmet title={title || ''} desc={title || ''} url="/" />
+      <MessageTitle type={type}>{title}</MessageTitle>
+      {/* <MessageTitle type={type}>{title}</MessageTitle> */}
+      {/* {type !== 'loading' && (
+        <Button
+          size="large"
+          disabled={type !== 'down'}
+          onClick={() => (type !== 'down' ? navigate(-1) : alert('!!'))}
+        >
           Back
         </Button>
-      )}
+      )} */}
+      <Button
+        size="large"
+        disabled={type === 'info'}
+        onClick={() => navigate(-1)}
+      >
+        Back
+      </Button>
     </BackDrop>
   );
 };
 
 export default FullScreenMessage;
 
-const MessageTitle = styled.p<FullScreenMessageProps>`
+const MessageTitle = styled.p<Pick<FullScreenMessageProps, 'type'>>`
   font-size: 4rem;
   font-weight: bold;
   color: var(--purple);

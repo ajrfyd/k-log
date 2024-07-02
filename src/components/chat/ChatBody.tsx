@@ -30,6 +30,11 @@ const ChatBody = ({ roomId }: ChatBodyProps) => {
     socket.emit('readMsgs', { createUserId: user.id, roomId });
   }, [socket, user, roomId]);
 
+  useEffect(() => {
+    if (!socket) return;
+    socket.on('zzz', console.log);
+  }, [socket]);
+
   // console.log('Chat Body');
   return (
     <OvFlex>

@@ -9,3 +9,6 @@ export const useUserState = () =>
 
 export const useChatState = () =>
   useSelector((store: RootReducerType) => store.chat);
+
+export const usePostState = () =>
+  useSelector((store: RootReducerType) => store.post);

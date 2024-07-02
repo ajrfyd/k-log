@@ -7,15 +7,18 @@ import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import rootReducer from './store/index.ts';
 import thunk from 'redux-thunk';
 import { hydrate } from 'react-dom';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'styled-components';
 import themes from '@styles/themes.ts';
 import GlobalStyles from '@styles/global';
-import FullScreenMessage from '@shared/FullScreenMessage.tsx';
-import { Suspense } from 'react';
-import ErrorBoundary from '@shared/ErrorBoundary.tsx';
+// import FullScreenMessage from '@shared/FullScreenMessage.tsx';
+// import { Suspense } from 'react';
+// import ErrorBoundary from '@shared/ErrorBoundary.tsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { queryClient } from './lib/api/queryClient.ts';
+import { ErrorBoundary } from 'react-error-boundary';
+import FullScreenErrorMessage from './components/shared/FullScreenErrorMessage.tsx';
 
 declare global {
   interface Window {
@@ -23,7 +26,7 @@ declare global {
   }
 }
 
-const client = new QueryClient();
+// const client = new QueryClient();
 // const store = createStore(
 //   rootReducer,
 //   window.__REDUX_DEVTOOLS_EXTENSION__ &&
@@ -35,17 +38,17 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 const root = document.getElementById('root') as HTMLElement;
 
 const Wrappers = (
-  <QueryClientProvider client={client}>
+  <QueryClientProvider client={queryClient}>
     <ReactQueryDevtools />
     <Provider store={store}>
       <HelmetProvider>
         <GlobalStyles />
         <ThemeProvider theme={themes}>
           <BrowserRouter>
-            <ErrorBoundary>
-              <Suspense fallback={<FullScreenMessage type="loading" />}>
-                <App />
-              </Suspense>
+            <ErrorBoundary FallbackComponent={FullScreenErrorMessage}>
+              {/* <Suspense fallback={<FullScreenMessage type="loading" />}> */}
+              <App />
+              {/* </Suspense> */}
             </ErrorBoundary>
           </BrowserRouter>
         </ThemeProvider>

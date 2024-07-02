@@ -35,12 +35,12 @@ export const useReqPostQuery = (tag: Partial<TagType> = { label: 'All' }) => {
 };
 
 export const useReqPostById = (id: string) => {
-  const { data, isError } = useSuspenseQuery({
+  const { data, isError, isLoading } = useSuspenseQuery({
     queryKey: ['getPostById', id],
     queryFn: () => getPostById<PostType>(id),
     select: (res) => res.result
   });
-  return { data, isError };
+  return { data, isError, isLoading };
 };
 
 // export const useMutatePost = (

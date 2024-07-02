@@ -16,6 +16,7 @@ const ManagePost = () => {
     if (id) return;
     if (user && user.role === 'user') return navigate('/', { replace: true });
   }, [user, id]);
+
   return (
     <main>
       <Container>

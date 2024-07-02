@@ -2,34 +2,47 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Helmet from '@shared/Helmet';
 import MDEditor from '@uiw/react-md-editor';
 import { Container } from 'react-bootstrap';
-import { useReqPostById } from '@lib/api/useQueries';
+// import { useReqPostById } from '@lib/api/useQueries';
 import Banner from '@shared/Banner';
 import useUser from '@/lib/hooks/useUser';
 import Iconbutton from '@shared/IconButton';
 import ModifyIcon from '@/components/iconComponents/ModifyIcon';
+// import { Suspense } from 'react';
+// import FullScreenMessage from '@/components/shared/FullScreenMessage';
+import useGetPost from '@/lib/queries/useGetPost';
+import Loading from '@/components/shared/Loading';
 
 const PostDetail = () => {
   const { id } = useParams();
-  const { data } = useReqPostById(id as string);
+  // const { data, isLoading } = useReqPostById(id as string);
+  const { data: postData, isLoading, error } = useGetPost(id as string);
   const navigate = useNavigate();
   const { user } = useUser();
 
-  if (!data) return null;
+  if (isLoading) <Loading />;
+
+  if (error) {
+    const err = new Error(error.message);
+    err.name = err.name || 'Unexpected Error';
+    throw err;
+  }
+  if (!postData) return null;
+
   return (
     <main>
       <Helmet
-        title={data.title}
-        desc={`${data.title} - ${data.tags.map(
+        title={postData.title}
+        desc={`${postData.title} - ${postData.tags.map(
           (tag: { id: string; label: string }) => tag.label
         )}`}
-        url={`/post/${data.id}`}
-        keyword={data.tags.map(({ label }) => label).join(', ')}
+        url={`/post/${postData.id}`}
+        keyword={postData.tags.map(({ label }) => label).join(', ')}
       />
-      <Banner title={data.title} />
-      {data && (
+      <Banner title={postData.title} />
+      {postData && (
         <Container className="position-relative">
           <MDEditor.Markdown
-            source={data.body}
+            source={postData.body}
             style={{
               marginTop: '1rem',
               whiteSpace: 'pre-wrap',
@@ -40,24 +53,20 @@ const PostDetail = () => {
               color: 'var(--purple)'
             }}
           />
-          {/* {user && user.role === 'admin' && (
-            <Iconbutton
-            style={{ position: 'absolute', top: '1rem', right: '1.5rem' }}
-            onClick={() => navigate(`/write/${post.id}`, { state: post })}
-            >
-            <FileEditIcon />
-            </Iconbutton>
-          )} */}
           {user && user.role === 'admin' && (
             <Iconbutton
               onClick={() =>
-                navigate(`/write/${data.id}`, { state: data, replace: true })
+                navigate(`/write/${postData.id}`, {
+                  state: postData,
+                  replace: true
+                })
               }
               style={{
                 position: 'absolute',
                 right: '1.5rem',
                 top: '1rem'
               }}
+              mode="right"
             >
               <ModifyIcon />
             </Iconbutton>

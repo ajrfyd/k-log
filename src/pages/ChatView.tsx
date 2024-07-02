@@ -15,6 +15,7 @@ const ChatView = () => {
   const { user } = useUser();
   const { data } = useMessages(user.isLogin);
   const dispatch = useDispatch();
+  const { VITE_ENV } = import.meta.env;
 
   useEffect(() => {
     if (!data || !user.isLogin) return;
@@ -30,7 +31,11 @@ const ChatView = () => {
       <Container $show={show}>
         <ChatOutter currentPage={currentPage} />
       </Container>
-      <Iconbutton $chatBtn onClick={() => (show ? close() : open())}>
+      <Iconbutton
+        $chatBtn
+        onClick={() => (show ? close() : open())}
+        mode={VITE_ENV === 'development' ? 'left' : 'right'}
+      >
         <ChatBalloon />
       </Iconbutton>
     </>,

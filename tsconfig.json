@@ -31,7 +31,8 @@
       "@utils": ["lib/utils/*"],
       "@hooks/*": ["lib/hooks/*"],
       "@store/*": ["store/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@types/*": ["lib/types/*"]
     },
     "typeRoots": ["./**/*.d.ts"]
   },

@@ -10,6 +10,12 @@ import Login from '@pages/Login';
 import Signup from '@pages/Signup';
 import ChatView from './pages/ChatView';
 import useSocket from './lib/hooks/useSocket';
+import { Suspense } from 'react';
+
+// import { useEffect } from 'react';
+// import useGetPostsData from './lib/queries/useGetPosts';
+// import useGetPost from './lib/queries/useGetPost';
+
 // const PostDetail = lazy(() => import('@/pages/PostDetail'));
 // const BlogMain = lazy(() => import('@pages/BlogMain'));
 
@@ -17,10 +23,6 @@ import useSocket from './lib/hooks/useSocket';
 // import { UserStateType } from './lib/types/types';
 
 const App = () => {
-  // const logInHandler = () =>
-  //   (location.href = `https://github.com/login/oauth/authorize?client_id=${
-  //     import.meta.env.VITE_GH_ID
-  //   }`);
   useSocket();
 
   return (
@@ -33,32 +35,24 @@ const App = () => {
       <NavBar />
       <Routes>
         <Route path="/" element={<BlogMain />} />
-        <Route path="/post/:id" element={<PostDetail />} />
-        {/* <Route path="/" element={<OutletBanner />}>
-          <Route index element={<BlogMain />} />
-          <Route path="/post/:id" element={<Post />} />
-        </Route> */}
+        <Route
+          path="/post/:id"
+          element={
+            <Suspense fallback={<FullScreenMessage type="info" />}>
+              <PostDetail />
+            </Suspense>
+          }
+        />
+
         <Route path="/write" element={<ManagePost />} />
         <Route path="/write/:id" element={<ManagePost />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<FullScreenMessage type="404" />} />
+        <Route path="*" element={<FullScreenMessage title="404 NotFound!" />} />
       </Routes>
 
-      <NotifySection />
-      {/* {socket && <ChatView />} */}
       <ChatView />
-
-      {/* <Iconbutton
-        $chatBtn
-        // onClick={() => (show ? dispatch(close()) : dispatch(open()))}
-        onClick={() => {}}
-        style={{
-          display: 'none'
-        }}
-      >
-        <ChatBalloon />
-      </Iconbutton> */}
+      <NotifySection />
     </div>
   );
 };

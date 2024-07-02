@@ -33,21 +33,14 @@ const NavBar = () => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              {/* <Nav.Link href="#action1">Posts</Nav.Link> */}
-              {/* <MenuItem
-                to="/"
-                onClick={() => dispatch(notify('블로그 페이지 입니다.'))}
-              >
-                Posts
-              </MenuItem> */}
-
               <BtnContainer>
                 {user && user.isLogin && (
                   <Iconbutton onClick={() => reqUserInfo(user.token, 'check')}>
                     <PenIcon />
                   </Iconbutton>
                 )}
-                <Iconbutton onClick={() => navigate('/')}>
+                {/* <Iconbutton onClick={() => navigate('/', { replace: true })}> */}
+                <Iconbutton onClick={() => (window.location.href = '/')}>
                   <BookIcon />
                 </Iconbutton>
                 <Iconbutton

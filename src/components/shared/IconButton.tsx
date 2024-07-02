@@ -5,9 +5,16 @@ type PropsType = PropsWithChildren & {
   onClick?: () => void;
   style?: React.CSSProperties;
   $chatBtn?: boolean;
+  mode?: 'right' | 'left';
 };
 
-const Iconbutton = ({ children, onClick, style, $chatBtn }: PropsType) => {
+const Iconbutton = ({
+  children,
+  onClick,
+  style,
+  $chatBtn,
+  mode = 'left'
+}: PropsType) => {
   return (
     <IconBtn
       onClick={onClick}
@@ -15,6 +22,7 @@ const Iconbutton = ({ children, onClick, style, $chatBtn }: PropsType) => {
       role="button"
       aria-label="button"
       $chatBtn={$chatBtn}
+      mode={mode}
     >
       {children}
     </IconBtn>
@@ -23,11 +31,22 @@ const Iconbutton = ({ children, onClick, style, $chatBtn }: PropsType) => {
 
 export default Iconbutton;
 
+const DirStyle = (mode: 'right' | 'left') => css`
+  ${mode === 'right' &&
+  css`
+    right: 1rem;
+  `}
+  ${mode === 'left' &&
+  css`
+    left: 1rem;
+  `}
+`;
+
 const ChatBtnStyles = css`
   position: fixed;
   bottom: 1rem;
   /* right: 1rem; */
-  left: 1rem;
+  /* left: 1rem; */
   width: 48px;
   height: 48px;
   display: flex;
@@ -45,7 +64,7 @@ const ChatBtnStyles = css`
   }
 `;
 
-const IconBtn = styled.button<Pick<PropsType, '$chatBtn'>>`
+const IconBtn = styled.button<Pick<PropsType, '$chatBtn' | 'mode'>>`
   display: flex;
   width: 2.5rem;
   height: 2.5rem;
@@ -85,4 +104,6 @@ const IconBtn = styled.button<Pick<PropsType, '$chatBtn'>>`
     css`
       ${ChatBtnStyles};
     `}
+
+  ${({ mode }) => mode && DirStyle(mode)}
 `;

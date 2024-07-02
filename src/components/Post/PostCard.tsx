@@ -20,6 +20,7 @@ const PostCard = ({ post }: PostCardProps) => {
     []
   );
   // (date: string) => new Intl.DateTimeFormat("ko", { dateStyle: "medium" }).format(new Date(date))
+
   return (
     <CardContainer
       // onClick={() => navigate(`/post/${post.id}`)}
@@ -28,7 +29,13 @@ const PostCard = ({ post }: PostCardProps) => {
     >
       <Link to={`/post/${post.id}`} state={{ ...post }}>
         {/* <Card.Header>Tags</Card.Header> */}
-        <Card.Header>{getCreatedAt(post.createdAt.toString())}</Card.Header>
+        <Card.Header>
+          {getCreatedAt(
+            post.createdAt
+              ? post.createdAt.toString()
+              : new Date(Date.now()).toString()
+          )}
+        </Card.Header>
         <Card.Body>
           <Card.Title>{post.title}</Card.Title>
           <Card.Text>{post.body}</Card.Text>
