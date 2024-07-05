@@ -8,8 +8,8 @@
     "build": "tsc && vite build",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
-    "preview": "react-hydratable --preview",
-    "postbuild": "react-hydratable"
+    "preview": "vite preview",
+    "postbuild": "react-snap"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.29.2",

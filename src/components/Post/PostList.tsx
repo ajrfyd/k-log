@@ -13,7 +13,7 @@ const PostList = () => {
   // const tagSearchHandler = (tag: TagType) => setTag(tag);
   // if (!data) return null;
   if (!postsData) return null;
-  console.log(postsData);
+  // console.log(postsData/);
 
   return (
     <>
