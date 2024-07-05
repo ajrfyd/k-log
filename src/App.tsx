@@ -10,6 +10,7 @@ import Login from '@pages/Login';
 import Signup from '@pages/Signup';
 import ChatView from './pages/ChatView';
 import useSocket from './lib/hooks/useSocket';
+import useSocketT from './lib/hooks/useSocketT';
 import { Suspense } from 'react';
 
 // import { useEffect } from 'react';
@@ -24,6 +25,8 @@ import { Suspense } from 'react';
 
 const App = () => {
   useSocket();
+
+  useSocketT();
 
   return (
     <div>

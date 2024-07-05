@@ -69,7 +69,7 @@ const ListRoomSection = styled.section`
 
 const ListItem = styled.div`
   cursor: pointer;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   padding: 1rem 0;
   width: 100%;
 `;

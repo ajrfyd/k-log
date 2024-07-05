@@ -16,7 +16,6 @@ const BlogMain = () => {
       />
       {/* <Banner title="hk's Blog" subTitle="Welcome my page!" $shadow /> */}
       <Banner title="hk's Blog" subTitle="Welcome my Blog 👍" />
-
       <Suspense fallback={<Loading />}>
         <PostList />
       </Suspense>

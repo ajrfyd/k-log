@@ -13,20 +13,17 @@ const PostList = () => {
   // const tagSearchHandler = (tag: TagType) => setTag(tag);
   // if (!data) return null;
   if (!postsData) return null;
+  console.log(postsData);
 
   return (
     <>
       {/* <TagCategories tags={data.tags} tagSearchHandler={tagSearchHandler} /> */}
-      {postsData.tags.length && (
+      {postsData.tags.length ? (
         <TagCategories
           tags={postsData.tags}
           tagSearchHandler={setSelectHandler}
         />
-      )}
-      {/* <TagCategories
-        tags={data.tags}
-        tagSearchHandler={tagSearchHandler}
-      /> */}
+      ) : null}
       <Container className="pb-3">
         <GridItemContainer>
           {postsData.posts.length >= 1 ? (

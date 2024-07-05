@@ -82,6 +82,8 @@ const Categories = ({ tags, tagSearchHandler }: CategoriesProps) => {
     };
   }, [tagPosition]);
 
+  if (!tags.length) return null;
+
   return (
     <Container>
       <ArrowButton onClick={moveLeftHandler}>
