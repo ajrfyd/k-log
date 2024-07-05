@@ -36,7 +36,7 @@ const PostDetail = () => {
           (tag: { id: string; label: string }) => tag.label
         )}`}
         url={`/post/${postData.id}`}
-        keyword={postData.tags.map(({ label }) => label).join(', ')}
+        keywords={postData.tags.map(({ label }) => label).join(', ')}
       />
       <Banner title={postData.title} />
       {postData && (

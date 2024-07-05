@@ -12,7 +12,7 @@ const BlogMain = () => {
         title="Welcome to hk's blog"
         desc="2년차 개발자의 기술 블로그 입니다."
         url="/"
-        keyword="klog, blog, tech, list, posts, 포스트 목록"
+        keywords="klog, blog, tech, list, posts, 포스트 목록"
       />
       {/* <Banner title="hk's Blog" subTitle="Welcome my page!" $shadow /> */}
       <Banner title="hk's Blog" subTitle="Welcome my Blog 👍" />

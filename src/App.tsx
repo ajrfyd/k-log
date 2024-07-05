@@ -34,6 +34,7 @@ const App = () => {
         title="Welcome to hk's blog"
         desc="2년차 개발자의 개인 블로그입니다."
         url="/"
+        keywords="klog, blog, tech, list, posts, 포스트 목록, react, 개발, 블로그"
       />
       <NavBar />
       <Routes>
