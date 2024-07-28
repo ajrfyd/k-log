@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { userLogin, userLogout } from '@/store/user/action';
 import { notify } from '@/store/notify/actions';
 import { useUserState } from './useStore';
-import { getUserInfo } from '../api/api';
+import { getUserInfo, logoutUser } from '../api/api';
 import { ServerDefaultResponseType } from '../api/types';
 import { useNavigate } from 'react-router-dom';
 import { initialize } from '@/store/chat/action';
@@ -13,11 +13,20 @@ const useUser = () => {
   const navigate = useNavigate();
   const user = useUserState();
 
-  const logoutHandler = useCallback(() => {
-    localStorage.removeItem('token');
-    dispatch(userLogout());
-    dispatch(initialize());
-    dispatch(notify('로그아웃 되었습니다.'));
+  const logoutHandler = useCallback(async () => {
+    try {
+      const { status } = await logoutUser();
+      if (status !== 200) alert('???');
+      localStorage.removeItem('token');
+      dispatch(userLogout());
+      dispatch(initialize());
+      dispatch(notify('로그아웃 되었습니다.'));
+    } catch (e) {
+      if (e instanceof Error) {
+        throw new Error(e.name);
+      }
+      throw new Error('알수 없는 에러');
+    }
   }, [user]);
 
   const reqUserInfo = useCallback(

@@ -12,13 +12,14 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'styled-components';
 import themes from '@styles/themes.ts';
 import GlobalStyles from '@styles/global';
-// import FullScreenMessage from '@shared/FullScreenMessage.tsx';
-// import { Suspense } from 'react';
-// import ErrorBoundary from '@shared/ErrorBoundary.tsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { queryClient } from './lib/api/queryClient.ts';
 import { ErrorBoundary } from 'react-error-boundary';
 import FullScreenErrorMessage from './components/shared/FullScreenErrorMessage.tsx';
+import { socketMiddleware, userMiddleware } from './store/middlewares.ts';
+// import FullScreenMessage from '@shared/FullScreenMessage.tsx';
+// import { Suspense } from 'react';
+// import ErrorBoundary from '@shared/ErrorBoundary.tsx';
 
 declare global {
   interface Window {
@@ -33,7 +34,10 @@ declare global {
 //     window.__REDUX_DEVTOOLS_EXTENSION__(applyMiddleware(thunk))
 // );
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(
+  rootReducer,
+  applyMiddleware(socketMiddleware(), userMiddleware, thunk)
+);
 
 const root = document.getElementById('root') as HTMLElement;
 

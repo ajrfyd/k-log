@@ -139,6 +139,17 @@ export const loginUser: loginUserApiType = async (userInfo: {
   return result.data;
 };
 
+export const logoutUser = async () => {
+  const result = await basicInstance.post(
+    '/user/logout',
+    { nickName: 'unknown' },
+    {
+      withCredentials: true
+    }
+  );
+  return result;
+};
+
 export const getUserInfo = async (): Promise<
   ServerDefaultResponseType<{
     nickName: string;
@@ -168,6 +179,7 @@ export const sendMsg = async (
   msg: string,
   roomId?: string
 ): Promise<ServerDefaultResponseType<Msg>> => {
+  console.log(roomId);
   const result = await basicInstance.post(
     `/msg${roomId ? `/room/${roomId}` : ''}`,
     { msg },
@@ -194,5 +206,16 @@ export const getMessagesByRoomId = async (
   const result = await basicInstance.get(`/msg/${roomId}`, {
     withCredentials: true
   });
+  return result.data;
+};
+
+export const createNickName = async (nickName: string) => {
+  const result = await basicInstance.post(
+    '/user/create/nickname',
+    {
+      nickName
+    },
+    { withCredentials: true }
+  );
   return result.data;
 };

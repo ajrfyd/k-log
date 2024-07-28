@@ -18,6 +18,8 @@ axios.interceptors.response.use(
     VITE_ENV === 'development' ? (console.log(err, '<<<<<,'), err) : err
 );
 
+axiosInstance.interceptors.request.use((r) => r);
+
 axiosInstance.interceptors.response.use(
   (r) => r,
   (err) => Promise.reject(err.response.data)

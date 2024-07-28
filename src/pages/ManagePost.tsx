@@ -3,17 +3,19 @@ import Flex from '@shared/Flex';
 import Text from '@shared/Text';
 import Post from '@/components/Post/Post';
 import { Container } from 'react-bootstrap';
-import useUser from '@/lib/hooks/useUser';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUserState2 } from '@/lib/hooks/useStore';
+// import useUser from '@/lib/hooks/useUser';
 
 const ManagePost = () => {
   const { id } = useParams();
-  const { user } = useUser();
+  const user = useUserState2();
+  // const { user } = useUser();
   const navigate = useNavigate();
-
   useEffect(() => {
     if (id) return;
+    console.log(user);
     if (user && user.role === 'user') return navigate('/', { replace: true });
   }, [user, id]);
 

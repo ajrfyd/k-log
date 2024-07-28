@@ -44,19 +44,6 @@ const Button = ({
       {children}
     </ButtonContainer>
   );
-  return (
-    <ButtonContainer
-      color={color}
-      size={size}
-      $weak={$weak}
-      $full={$full}
-      type="button"
-      aria-disabled={disabled}
-      onClick={onClick}
-    >
-      {children}
-    </ButtonContainer>
-  );
 };
 
 export default Button;

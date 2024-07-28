@@ -98,6 +98,7 @@ export const useGetRooms = () => {
 };
 
 export const useGetMessagesByRoomId = (id: string, clicked: boolean) => {
+  console.log(id, '<<<<<<<<<<');
   const { data, isError } = useQuery({
     queryKey: ['getMessagesFromRoomId', id],
     queryFn: () => getMessagesByRoomId(id),

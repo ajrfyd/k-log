@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Helmet from '@shared/Helmet';
 import MDEditor from '@uiw/react-md-editor';
@@ -77,4 +78,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default memo(PostDetail);

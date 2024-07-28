@@ -1,15 +1,14 @@
-import { Link } from 'react-router-dom';
 import Form from './Form';
 import TextField from '@shared/TextField';
 import Spacing from '@shared/Spacing';
 import Button from '@shared/Button';
-import Text from '@shared/Text';
 import { ChangeEvent, useCallback, useMemo, useState, useRef } from 'react';
 import { validate } from '@lib/utils/validator';
 import { useDispatch } from 'react-redux';
 import { notify } from '@/store/notify/actions';
-import { loginMutation } from '@/lib/api/useMutation';
 import { type ResponseUserType } from '@/store/user/types';
+import { useUserState2 } from '@/lib/hooks/useStore';
+import useMutateLogin from '@/lib/queries/useMutateLogin';
 
 type LoginProps = {
   loginSuccessHandler: (data: ResponseUserType) => void;
@@ -22,11 +21,11 @@ const LoginForm = ({ loginSuccessHandler }: LoginProps) => {
   });
   const nickNameRef = useRef<HTMLInputElement>(null);
   const pwdRef = useRef<HTMLInputElement>(null);
+  const { socketId } = useUserState2();
 
-  const { mutate } = loginMutation(
-    form,
-    (data) => loginSuccessHandler(data.result),
-    (err) => {
+  const { mutate } = useMutateLogin({
+    onSuccess: (data) => loginSuccessHandler(data.result),
+    onError: (err) => {
       if (!nickNameRef.current) return;
       if (!pwdRef.current) return;
       dispatch(notify(err.message, 'error'));
@@ -34,7 +33,17 @@ const LoginForm = ({ loginSuccessHandler }: LoginProps) => {
       if (err.message.includes('닉네임')) nickNameRef.current.focus();
       return;
     }
-  );
+  });
+
+  // (data) => loginSuccessHandler(data.result),
+  //   (err) => {
+  //     if (!nickNameRef.current) return;
+  //     if (!pwdRef.current) return;
+  //     dispatch(notify(err.message, 'error'));
+  //     if (err.message.includes('비밀번호')) pwdRef.current.focus();
+  //     if (err.message.includes('닉네임')) nickNameRef.current.focus();
+  //     return;
+  //   }
 
   const dispatch = useDispatch();
 
@@ -43,7 +52,10 @@ const LoginForm = ({ loginSuccessHandler }: LoginProps) => {
       e.preventDefault();
       if (Object.keys(error).length)
         return dispatch(notify('비정상적 접근입니다.', 'error'));
-      mutate();
+      mutate({
+        userInfo: form,
+        socketId: socketId as string
+      });
     },
     [form]
   );
@@ -86,14 +98,15 @@ const LoginForm = ({ loginSuccessHandler }: LoginProps) => {
       </Button>
 
       <Spacing size={12} />
-      <Link to="/signup">
+
+      {/* <Link to="/signup">
         <Text
           $align="center"
           text="아직 계정이 없으신가요?"
           color="blue"
           size="small"
         />
-      </Link>
+      </Link> */}
     </Form>
   );
 };

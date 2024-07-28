@@ -1,9 +1,9 @@
 import TagCategories from '@/components/categories/TagCategories';
 import { Container, Col } from 'react-bootstrap';
-import NoResults from '@shared/NoResults';
 import GridItemContainer from '@shared/GridItemContainer';
 import PostCard from '@/components/Post/PostCard';
 import usePost from '@/lib/hooks/usePost';
+// import NoResults from '@shared/NoResults';
 
 const PostList = () => {
   // const [tag] = useState<Partial<TagType>>({ label: 'All' });
@@ -13,7 +13,6 @@ const PostList = () => {
   // const tagSearchHandler = (tag: TagType) => setTag(tag);
   // if (!data) return null;
   if (!postsData) return null;
-  // console.log(postsData/);
 
   return (
     <>
@@ -26,7 +25,12 @@ const PostList = () => {
       ) : null}
       <Container className="pb-3">
         <GridItemContainer>
-          {postsData.posts.length >= 1 ? (
+          {postsData.posts.map((post) => (
+            <Col key={post.id}>
+              <PostCard post={post} />
+            </Col>
+          ))}
+          {/* {postsData.posts.length >= 1 ? (
             postsData.posts.map((post) => (
               <Col key={post.id}>
                 <PostCard post={post} />
@@ -34,7 +38,7 @@ const PostList = () => {
             ))
           ) : (
             <NoResults />
-          )}
+          )} */}
         </GridItemContainer>
       </Container>
     </>

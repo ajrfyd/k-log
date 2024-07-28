@@ -1,5 +1,9 @@
 import { io, Socket } from 'socket.io-client';
 import { useEffect, useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { useUserState2 } from './useStore';
+import { setUser } from '@/store/userr/action';
+// import { getCheckUser } from '../api/chat';
 
 interface SocketObj {
   socket: Socket | null;
@@ -15,23 +19,39 @@ const { VITE_ENV, VITE_API_URL } = import.meta.env;
 const useSocketT = (): SocketObj => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [connected, setConnected] = useState(false);
+  const user = useUserState2();
+  const dispatch = useDispatch();
+
+  const getUser = useCallback(async () => {
+    // const user = await getCheckUser();
+    // if (!user)
+    //   return setUserInfo((prev) => ({
+    //     ...prev,
+    //     recentConnect: new Date(Date.now())
+    //   }));
+  }, []);
 
   useEffect(() => {
     const socketInstance = io(
       VITE_ENV !== 'development' ? VITE_API_URL : 'http://localhost:8800',
       {
-        transports: ['websocket']
-        // auth: {
-        //   id: user.id
-        // }
+        transports: ['websocket'],
+        auth: {
+          nickName: user.nickName
+        }
       }
     );
 
     setSocket(socketInstance);
 
     socketInstance.on('connect', () => {
-      console.log('Connected', 'useSocket T');
+      console.log(`%cConnected socketId: ${socketInstance.id}`, 'color: green');
       setConnected(true);
+      // setUserInfo((prev) => ({
+      //   ...prev,
+      //   socketId: socketInstance.id as string
+      // }));
+      dispatch(setUser({ socketId: socketInstance.id }));
     });
 
     socketInstance.on('disconnect', () => {
@@ -42,6 +62,23 @@ const useSocketT = (): SocketObj => {
       socketInstance.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (!user.token) {
+      getUser();
+    }
+  }, []);
+
+  // useEffect(() => {
+  // & 기존 로그인 시 setUserInfo 해 줘야함
+  // 상태에 유저 정보가 없을때
+  // 브라우저 재 시작
+  // const cookie = getCookie('jwt');
+  // if (cookie && !userInfo.token) {
+  //   getUser();
+  // }
+  // console.log(userInfo);
+  // }, [userInfo]);
 
   const addEventListener = useCallback(
     (event: string, callback: (data: any) => void) => {

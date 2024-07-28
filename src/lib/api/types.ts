@@ -87,7 +87,8 @@ export type ServerResponseLoginUserInfo = {
 };
 
 export type loginUserApiType = (
-  userInfo: LoginUserInfoType
+  userInfo: LoginUserInfoType,
+  socketId: string
 ) => Promise<ServerDefaultResponseType<ServerResponseLoginUserInfo>>;
 
 export type createUserApiType = (

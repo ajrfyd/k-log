@@ -59,13 +59,13 @@ export const signupMutation = (
 };
 
 export const loginMutation = (
-  userInfo: LoginUserInfoType,
+  { userInfo, socketId }: { userInfo: LoginUserInfoType; socketId: string },
   onSuccessFn: (res: ServerDefaultResponseType<ResponseUserType>) => void,
   onErrorFn: (err: ServerDefaultResponseType<null>) => void
 ) => {
   return useMutation({
     mutationKey: ['loginUser', userInfo.nickName],
-    mutationFn: () => loginUser(userInfo),
+    mutationFn: () => loginUser(userInfo, socketId),
     onSuccess: onSuccessFn,
     onError: onErrorFn
   });

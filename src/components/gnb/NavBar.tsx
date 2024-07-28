@@ -10,11 +10,28 @@ import LeaveIcon from '@components/iconComponents/LeaveIcon';
 import { useNavigate } from 'react-router-dom';
 import BookIcon from '../iconComponents/BookIcon';
 import PenIcon from '../iconComponents/PenIcon';
-import useUser from '@/lib/hooks/useUser';
+import { useUserState2 } from '@/lib/hooks/useStore';
+import { useDispatch } from 'react-redux';
+import useUser2 from '@/lib/hooks/useUser2';
+import { useCallback } from 'react';
+import { logoutUser } from '@/lib/api/api';
+import { notify } from '@/store/notify/actions';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const { user, logoutHandler, reqUserInfo } = useUser();
+  const dispatch = useDispatch();
+  const user = useUserState2();
+  const { logoutHandler } = useUser2();
+
+  const logoutHandler2 = useCallback(() => {
+    logoutUser()
+      .then((result) => {
+        if (result.status === 200) {
+          logoutHandler();
+        }
+      })
+      .catch((e) => dispatch(notify(e.message)));
+  }, []);
 
   return (
     <NavContainer>
@@ -34,8 +51,9 @@ const NavBar = () => {
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
               <BtnContainer>
-                {user && user.isLogin && (
-                  <Iconbutton onClick={() => reqUserInfo(user.token, 'check')}>
+                {user && user.isLogin && user.role === 'admin' && (
+                  // <Iconbutton onClick={() => reqUserInfo(user.token, 'check')}>
+                  <Iconbutton onClick={() => navigate('/write')}>
                     <PenIcon />
                   </Iconbutton>
                 )}
@@ -45,7 +63,7 @@ const NavBar = () => {
                 </Iconbutton>
                 <Iconbutton
                   onClick={
-                    user.isLogin ? logoutHandler : () => navigate('/login')
+                    user.isLogin ? logoutHandler2 : () => navigate('/login')
                   }
                 >
                   {user && user.isLogin ? (

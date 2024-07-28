@@ -50,7 +50,7 @@ const usePost = () => {
   useEffect(() => {
     if (!initialData) return;
     const { result } = initialData;
-    console.log('useEffect!');
+    // console.log('useEffect!');
 
     setPostsData((prev) => ({
       ...prev,
