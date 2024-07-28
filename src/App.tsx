@@ -8,7 +8,7 @@ import BlogMain from '@pages/BlogMain';
 import PostDetail from '@pages/PostDetail';
 import Login from '@pages/Login';
 import Signup from '@pages/Signup';
-import ChatView from './pages/ChatView';
+// import ChatView from './pages/ChatView';
 import { useChatTState } from './lib/hooks/useStore';
 import { Suspense, useEffect } from 'react';
 import ChatButton from '@components/chat/ChatButton';
@@ -68,7 +68,7 @@ const App = () => {
         <Route path="*" element={<FullScreenMessage title="404 NotFound!" />} />
       </Routes>
 
-      <ChatView />
+      {/* <ChatView /> */}
       <ChatButton
         onClick={() => (show ? dispatch(close()) : dispatch(open()))}
       />

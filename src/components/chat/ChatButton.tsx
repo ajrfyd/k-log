@@ -17,8 +17,9 @@ export default ChatButton;
 
 const ChatBalloonContainer = styled.div`
   position: fixed;
-  left: 1rem;
-  bottom: 15rem;
+  /* left: 1rem; */
+  right: 2rem;
+  bottom: 2rem;
   width: 36px;
   height: 36px;
   cursor: pointer;
