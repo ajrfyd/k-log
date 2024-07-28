@@ -24,6 +24,7 @@ export const socketMiddleware = (): Middleware<{}, RootReducerType> => {
           VITE_ENV !== 'development' ? VITE_API_URL : 'http://localhost:8800',
           {
             transports: ['websocket'],
+            withCredentials: true,
             auth: {
               // nickName: user.nickName
             }
