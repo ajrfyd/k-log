@@ -3,22 +3,24 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Helmet from '@shared/Helmet';
 import MDEditor from '@uiw/react-md-editor';
 import { Container } from 'react-bootstrap';
-// import { useReqPostById } from '@lib/api/useQueries';
+import { useUserState2 } from '@/lib/hooks/useStore';
 import Banner from '@shared/Banner';
-import useUser from '@/lib/hooks/useUser';
 import Iconbutton from '@shared/IconButton';
 import ModifyIcon from '@/components/iconComponents/ModifyIcon';
-// import { Suspense } from 'react';
-// import FullScreenMessage from '@/components/shared/FullScreenMessage';
 import useGetPost from '@/lib/queries/useGetPost';
 import Loading from '@/components/shared/Loading';
+// import { useReqPostById } from '@lib/api/useQueries';
+// import useUser from '@/lib/hooks/useUser';
+// import { Suspense } from 'react';
+// import FullScreenMessage from '@/components/shared/FullScreenMessage';
 
 const PostDetail = () => {
   const { id } = useParams();
-  // const { data, isLoading } = useReqPostById(id as string);
   const { data: postData, isLoading, error } = useGetPost(id as string);
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { role } = useUserState2();
+  // const { user } = useUser();
+  // const { data, isLoading } = useReqPostById(id as string);
 
   if (isLoading) <Loading />;
 
@@ -54,7 +56,7 @@ const PostDetail = () => {
               color: 'var(--purple)'
             }}
           />
-          {user && user.role === 'admin' && (
+          {role === 'admin' && (
             <Iconbutton
               onClick={() =>
                 navigate(`/write/${postData.id}`, {
